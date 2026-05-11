@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ms" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onboarding Redesign — Options A/B/C</title>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: { colors: {
+  ruby:{ 500:'#C8102E',600:'#B22222',700:'#8B1E1E',800:'#5C1414' },
+  sapphire:{ 500:'#0F52BA',600:'#1C3F7A',700:'#152E5C',800:'#0D1E3D' },
+  ink:'#1A1A1F', inkm:'#7A7A8A', border:'#E4E4EC', cream:'#F8F7F4'
+}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0D1117;font-family:'DM Sans',system-ui,sans-serif;padding:40px 20px 60px;color:white;}
+.row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;}
+.phone{width:390px;height:844px;background:#F8F7F4;border-radius:48px;overflow:hidden;position:relative;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 40px rgba(0,0,0,0.5);
+  display:flex;flex-direction:column;}
+.serif{font-family:'Cormorant Garamond',serif;}
+
+.sb{display:flex;justify-content:space-between;align-items:center;padding:12px 28px 4px;flex-shrink:0;font-size:12px;font-weight:700;color:#1A1A1F;}
+.sb.dark{color:white;}
+
+.opt-row-tag{text-align:center;font-size:11px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:6px;}
+.opt-row-tag b{color:white;font-size:14px;display:block;margin-top:4px;}
+.opt-row-desc{text-align:center;font-size:11px;color:rgba(255,255,255,0.4);max-width:600px;margin:0 auto 16px;line-height:1.5;}
+.step-tag{text-align:center;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-top:10px;}
+
+/* ════════════ OPTION A: STORY CAROUSEL ════════════ */
+.aA-welcome{flex:1;background:linear-gradient(145deg,#6B0F20,#C8102E,#E82040);padding:40px 28px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;color:white;}
+.aA-welcome::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.1) 1px,transparent 1px);background-size:18px 18px;pointer-events:none;}
+.aA-welcome::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,180,180,0.2) 0%,transparent 70%);top:-100px;right:-80px;}
+
+.aA-feature{flex:1;background:linear-gradient(180deg,white,#F8F7F4);padding:30px 28px;display:flex;flex-direction:column;justify-content:space-between;}
+.aA-feature-img{aspect-ratio:1;background:linear-gradient(145deg,#FAE0E0,#F8F7F4);border-radius:28px;display:flex;align-items:center;justify-content:center;border:1px solid #FAE0E0;position:relative;overflow:hidden;margin:20px 0;}
+.aA-feature-img::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(200,16,46,0.1) 1px,transparent 1px);background-size:14px 14px;}
+.aA-iw-big{width:140px;height:140px;border-radius:50%;background:linear-gradient(145deg,#8B1E1E,#C8102E);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 40px rgba(200,16,46,0.3);position:relative;z-index:1;}
+
+.aA-dots{display:flex;gap:6px;justify-content:center;margin-top:12px;}
+.aA-dot{width:7px;height:7px;border-radius:50%;background:#E4E4EC;}
+.aA-dot.act{width:20px;border-radius:4px;background:#C8102E;}
+
+.aA-signup{flex:1;padding:32px 28px;display:flex;flex-direction:column;justify-content:space-between;background:white;}
+.aA-input-grp{margin-bottom:12px;}
+.aA-input-label{font-size:11px;font-weight:700;color:#7A7A8A;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;}
+.aA-input{background:#F8F7F4;border-radius:14px;border:1.5px solid #E4E4EC;padding:14px 16px;font-size:15px;color:#1A1A1F;font-family:inherit;}
+
+/* ════════════ OPTION B: QUICK SETUP ════════════ */
+.aB-welcome{flex:1;background:linear-gradient(180deg,white,#F8F7F4);padding:40px 28px;display:flex;flex-direction:column;justify-content:space-between;}
+.aB-logo-box{display:flex;justify-content:center;align-items:center;flex:1;}
+.aB-logo-wrap{width:96px;height:96px;border-radius:28px;background:linear-gradient(145deg,#8B1E1E,#C8102E,#E03050);box-shadow:0 16px 40px rgba(200,16,46,0.35);display:flex;align-items:center;justify-content:center;position:relative;}
+.aB-logo-wrap::before{content:'';position:absolute;inset:-3px;border-radius:30px;background:linear-gradient(145deg,rgba(200,16,46,0.3),transparent);z-index:-1;filter:blur(10px);}
+
+.aB-step{flex:1;padding:24px 28px 32px;display:flex;flex-direction:column;background:white;}
+.aB-progress{display:flex;align-items:center;gap:8px;margin-bottom:20px;}
+.aB-progress-bar{flex:1;height:5px;background:#E4E4EC;border-radius:3px;overflow:hidden;}
+.aB-progress-fill{height:100%;background:linear-gradient(90deg,#C8102E,#E03050);border-radius:3px;}
+.aB-progress-text{font-size:11px;font-weight:700;color:#7A7A8A;}
+
+.aB-q-eye{font-size:11px;font-weight:700;color:#C8102E;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;}
+.aB-q{font-size:26px;font-weight:700;color:#1A1A1F;letter-spacing:-0.5px;line-height:1.2;margin-bottom:10px;}
+.aB-q-sub{font-size:13px;color:#7A7A8A;line-height:1.5;}
+
+.aB-success{flex:1;background:linear-gradient(145deg,#1A1A1F,#222228);padding:40px 28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:white;position:relative;overflow:hidden;}
+.aB-success::before{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,0.25) 0%,transparent 70%);top:-100px;left:-100px;}
+.aB-success-iw{width:120px;height:120px;border-radius:50%;background:linear-gradient(145deg,#D4AF37,#F4D03F);box-shadow:0 0 60px rgba(212,175,55,0.5),0 12px 40px rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center;position:relative;z-index:1;}
+
+/* ════════════ OPTION C: VISUAL PROFILE BUILDER ════════════ */
+.aC-role{flex:1;background:linear-gradient(180deg,white,#F8F7F4);padding:32px 24px;display:flex;flex-direction:column;}
+.aC-role-card{background:white;border-radius:20px;padding:22px;border:2px solid #E4E4EC;margin-bottom:12px;flex:1;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+.aC-role-card.sel{border-color:#C8102E;background:linear-gradient(145deg,#FDF5F5,white);box-shadow:0 8px 24px rgba(200,16,46,0.12);}
+.aC-role-card.sel::after{content:'';position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;background:#C8102E;display:flex;align-items:center;justify-content:center;}
+.aC-role-iw{width:72px;height:72px;border-radius:20px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.aC-role-iw.ind{background:linear-gradient(145deg,#FAE0E0,#F8F7F4);}
+.aC-role-iw.team{background:linear-gradient(145deg,#D6E8FC,#F8F7F4);}
+.aC-role-name{font-size:18px;font-weight:700;color:#1A1A1F;letter-spacing:-0.3px;}
+.aC-role-desc{font-size:12px;color:#7A7A8A;line-height:1.5;margin-top:5px;}
+.aC-features-row{display:flex;gap:12px;margin-top:14px;}
+.aC-feature-chip{display:flex;align-items:center;gap:5px;background:#F8F7F4;padding:5px 10px;border-radius:8px;font-size:10px;font-weight:600;color:#7A7A8A;}
+
+.aC-company{flex:1;background:linear-gradient(180deg,white,#F8F7F4);padding:32px 24px;display:flex;flex-direction:column;}
+.aC-cgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px;}
+.aC-ccell{padding:18px 14px;border-radius:16px;background:white;border:1.5px solid #E4E4EC;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;}
+.aC-ccell.sel{background:linear-gradient(145deg,#1C3F7A,#0F52BA);border-color:transparent;box-shadow:0 6px 16px rgba(15,82,186,0.3);}
+.aC-ccell-iw{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:#F8F7F4;}
+.aC-ccell.sel .aC-ccell-iw{background:rgba(255,255,255,0.15);}
+.aC-ccell-name{font-size:13px;font-weight:700;color:#1A1A1F;text-align:center;}
+.aC-ccell.sel .aC-ccell-name{color:white;}
+
+.aC-plan{flex:1;background:linear-gradient(180deg,white,#F8F7F4);padding:24px 22px;display:flex;flex-direction:column;}
+.aC-plan-card{background:white;border-radius:18px;padding:18px;border:1.5px solid #E4E4EC;margin-bottom:10px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;}
+.aC-plan-card.pro{background:linear-gradient(145deg,#6B0F20,#C8102E);color:white;border-color:transparent;box-shadow:0 8px 24px rgba(200,16,46,0.3);}
+.aC-plan-card.pro::before{content:'POPULAR';position:absolute;top:14px;right:14px;background:#D4AF37;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:5px;}
+.aC-plan-name{font-size:17px;font-weight:700;letter-spacing:-0.3px;}
+.aC-plan-price{font-size:24px;font-weight:700;letter-spacing:-0.5px;}
+.aC-plan-feature{display:flex;align-items:center;gap:7px;font-size:11px;}
+
+/* CTAs and buttons */
+.btn-primary{background:linear-gradient(145deg,#8B1E1E,#C8102E,#E03050);color:white;border:none;border-radius:16px;padding:16px;font-family:inherit;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 20px rgba(200,16,46,0.35);}
+.btn-secondary{background:transparent;color:white;border:1.5px solid rgba(255,255,255,0.3);border-radius:16px;padding:14px;font-family:inherit;font-size:14px;font-weight:700;text-align:center;}
+.btn-dark{background:#1A1A1F;color:white;border:none;border-radius:16px;padding:16px;font-family:inherit;font-size:15px;font-weight:700;text-align:center;}
+.btn-ghost{background:transparent;color:#7A7A8A;border:none;font-family:inherit;font-size:13px;font-weight:600;padding:8px;text-align:center;}
+</style>
+</head>
+<body>
+
+<!-- ════════════ OPTION A: STORY CAROUSEL ════════════ -->
+<p class="opt-row-tag">Option A<b>Story Carousel (Brand-Driven)</b></p>
+<p class="opt-row-desc">Welcome page besar dengan gradient hero. Feature showcase dengan illustrations. Final sign-up form compact. Macam Headspace atau Duolingo.</p>
+<div class="row">
+
+  <!-- Screen 1: Welcome -->
+  <div>
+    <div class="phone">
+      <div class="sb dark"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div class="aA-welcome">
+        <div style="position:relative;z-index:1;">
+          <div style="width:56px;height:56px;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg style="width:28px;height:28px;color:white;" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="font-size:11px;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:3px;font-weight:700;">Selamat Datang ke</p>
+          <h1 class="serif" style="font-size:64px;font-weight:700;color:white;letter-spacing:-2px;line-height:1;margin-top:8px;">Agentivo<span style="color:#FCD34D;">.MY</span></h1>
+          <p style="font-size:15px;color:rgba(255,255,255,0.85);margin-top:14px;line-height:1.55;">Platform pengurusan ejen insurans Malaysia paling lengkap. Lead, polisi, komisyen — dalam satu app.</p>
+        </div>
+        <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;">
+          <button class="btn-primary" style="background:white;color:#C8102E;box-shadow:0 8px 24px rgba(0,0,0,0.2);">Daftar Akaun Baru →</button>
+          <button class="btn-secondary">Saya sudah ada akaun</button>
+        </div>
+      </div>
+    </div>
+    <p class="step-tag">① Welcome</p>
+  </div>
+
+  <!-- Screen 2: Feature carousel -->
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div class="aA-feature">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <p style="font-size:11px;color:#7A7A8A;font-weight:600;letter-spacing:1px;">2 dari 4</p>
+          <button class="btn-ghost">Langkau</button>
+        </div>
+
+        <div class="aA-feature-img">
+          <div class="aA-iw-big">
+            <svg style="width:72px;height:72px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+        </div>
+
+        <div style="text-align:center;">
+          <p style="font-size:11px;color:#C8102E;font-weight:700;text-transform:uppercase;letter-spacing:2px;">Feature</p>
+          <h2 class="serif" style="font-size:34px;font-weight:700;color:#1A1A1F;letter-spacing:-1px;line-height:1.1;margin-top:6px;">Urus Leads<br/>Dengan Mudah</h2>
+          <p style="font-size:14px;color:#7A7A8A;margin-top:12px;line-height:1.55;">Pantau prospek dari Hot, Warm hingga Cold. Follow-up auto-reminder, WhatsApp template siap.</p>
+        </div>
+
+        <div>
+          <div class="aA-dots">
+            <div class="aA-dot"></div>
+            <div class="aA-dot act"></div>
+            <div class="aA-dot"></div>
+            <div class="aA-dot"></div>
+          </div>
+          <button class="btn-primary" style="margin-top:18px;width:100%;">Seterusnya →</button>
+        </div>
+      </div>
+    </div>
+    <p class="step-tag">② Feature Showcase</p>
+  </div>
+
+  <!-- Screen 3: Sign up form -->
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div class="aA-signup">
+        <div>
+          <button class="btn-ghost" style="padding:0;text-align:left;margin-bottom:24px;">← Kembali</button>
+          <p style="font-size:11px;color:#C8102E;font-weight:700;text-transform:uppercase;letter-spacing:2px;">DAFTAR AKAUN</p>
+          <h2 class="serif" style="font-size:36px;font-weight:700;color:#1A1A1F;letter-spacing:-1px;line-height:1.1;margin-top:6px;">Mula Perjalanan<br/>Anda</h2>
+          <p style="font-size:13px;color:#7A7A8A;margin-top:8px;">Buat akaun dalam 30 saat</p>
+
+          <div style="margin-top:28px;">
+            <div class="aA-input-grp">
+              <p class="aA-input-label">Email</p>
+              <input class="aA-input" type="email" value="ahmad@example.com"/>
+            </div>
+            <div class="aA-input-grp">
+              <p class="aA-input-label">Kata Laluan</p>
+              <input class="aA-input" type="password" value="••••••••"/>
+            </div>
+            <div class="aA-input-grp">
+              <p class="aA-input-label">Nombor Telefon</p>
+              <input class="aA-input" type="tel" value="012-345 6789"/>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button class="btn-primary" style="width:100%;">Daftar Sekarang →</button>
+          <p style="text-align:center;margin-top:12px;font-size:11px;color:#7A7A8A;">Dengan mendaftar, anda bersetuju dengan <span style="color:#0F52BA;font-weight:600;">Terma & Syarat</span></p>
+        </div>
+      </div>
+    </div>
+    <p class="step-tag">③ Sign Up</p>
+  </div>
+
+</div>
+
+<!-- ════════════ OPTION B: QUICK SETUP ════════════ -->
+<p class="opt-row-tag">Option B<b>Quick Setup (Form-Driven)</b></p>
+<p class="opt-row-desc">Brief welcome, lepas tu terus ke step-by-step setup dengan progress bar. Pendek + cepat. Macam Cash App atau banking onboarding.</p>
+<div class="row">
+
+  <!-- Screen 1: Welcome compact -->
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div class="aB-welcome">
+        <div></div>
+        <div class="aB-logo-box" style="flex-direction:column;gap:24px;">
+          <div class="aB-logo-wrap">
+            <svg style="width:48px;height:48px;color:white;" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div style="text-align:center;">
+            <h1 class="serif" style="font-size:42px;font-weight:700;color:#1A1A1F;letter-spacing:-1px;line-height:1;">Agentivo<span style="color:#C8102E;">.MY</span></h1>
+            <p style="font-size:13px;color:#7A7A8A;margin-top:8px;line-height:1.5;max-width:280px;margin-left:auto;margin-right:auto;">Platform CRM<br/>untuk ejen insurans Malaysia</p>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn-primary">Daftar Akaun Baru</button>
+          <button style="background:white;color:#1A1A1F;border:1.5px solid #E4E4EC;border-radius:16px;padding:14px;font-family:inherit;font-size:14px;font-weight:700;">Log Masuk</button>
+          <p style="text-align:center;font-size:11px;color:#7A7A8A;margin-top:4px;">Atau guna <span style="color:#0F52BA;font-weight:700;">Sign in with Google</span></p>
+        </div>
+      </div>
+    </div>
+    <p class="step-tag">① Welcome</p>
+  </div>
+
+  <!-- Screen 2: Step form -->
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div class="aB-step">
+        <div class="aB-progress">
+          <button class="btn-ghost" style="padding:0;width:36px;height:36px;border-radius:50%;background:#F8F7F4;display:flex;align-items:center;justify-content:center;">
+            <svg style="width:16px;height:16px;color:#1A1A1F;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="aB-progress-bar"><div class="aB-progress-fill" style="width:50%;"></div></div>
+          <p class="aB-progress-text">2 / 4</p>
+        </div>
+
+        <p class="aB-q-eye">LANGKAH 2</p>
+        <h2 class="aB-q serif">Siapa nama anda?</h2>
+        <p class="aB-q-sub">Pelanggan anda akan lihat nama ini pada profil digital dan proposal.</p>
+
+        <div style="margin-top:30px;">
+          <div class="aA-input-grp">
+            <p class="aA-input-label">Nama Penuh</p>
+            <input class="aA-input" value="Ahmad Faris Bin Hassan"/>
+          </div>
+          <div class="aA-input-grp">
+            <p class="aA-input-label">No. Lesen BNM</p>
+            <input class="aA-input" value="LIAM-2019-0445" placeholder="cth: LIAM-XXXX-XXXX"/>
+          </div>
+        </div>
+
+        <div style="flex:1;"></div>
+        <button class="btn-primary" style="width:100%;">Seterusnya →</button>
+        <button class="btn-ghost" style="margin-top:8px;text-align:center;">Langkau (boleh isi kemudian)</button>
+      </div>
+    </div>
+    <p class="step-tag">② Step Form</p>
+  </div>
+
+  <!-- Screen 3: Success -->
+  <div>
+    <div class="phone">
+      <div class="sb dark"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div class="aB-success">
+        <div style="position:relative;z-index:1;">
+          <div class="aB-success-iw">
+            <svg style="width:60px;height:60px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <p style="font-size:11px;color:#D4AF37;text-transform:uppercase;letter-spacing:3px;font-weight:700;text-align:center;margin-top:30px;">Selamat Datang</p>
+          <h1 class="serif" style="font-size:38px;font-weight:700;color:white;letter-spacing:-1px;line-height:1.1;text-align:center;margin-top:8px;">Akaun anda<br/>sudah siap!</h1>
+          <p style="font-size:14px;color:rgba(255,255,255,0.7);text-align:center;margin-top:14px;line-height:1.55;max-width:300px;margin-left:auto;margin-right:auto;">Anda kini boleh mula urus prospek, polisi dan komisyen. Mari kita capai MDRT tahun ini! 🏆</p>
+
+          <div style="margin-top:32px;display:flex;flex-direction:column;gap:10px;">
+            <button class="btn-primary" style="width:100%;">Mula Guna →</button>
+            <button class="btn-ghost" style="color:rgba(255,255,255,0.6);">Lihat tutorial dahulu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="step-tag">③ Success</p>
+  </div>
+
+</div>
+
+<!-- ════════════ OPTION C: VISUAL PROFILE BUILDER ════════════ -->
+<p class="opt-row-tag">Option C<b>Visual Profile Builder</b></p>
+<p class="opt-row-desc">Wizard-style — pilih role, syarikat, pakej secara visual. Big cards dengan icons, animasi. Branded + memorable. Macam Notion atau Linear onboarding.</p>
+<div class="row">
+
+  <!-- Screen 1: Role picker -->
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div class="aC-role">
+        <div class="aB-progress" style="margin-bottom:24px;">
+          <button class="btn-ghost" style="padding:0;width:36px;height:36px;border-radius:50%;background:#F8F7F4;display:flex;align-items:center;justify-content:center;">
+            <svg style="width:16px;height:16px;color:#1A1A1F;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="aB-progress-bar"><div class="aB-progress-fill" style="width:33%;"></div></div>
+          <p class="aB-progress-text">1 / 3</p>
+        </div>
+
+        <p style="font-size:11px;color:#C8102E;font-weight:700;text-transform:uppercase;letter-spacing:2px;">PERANAN ANDA</p>
+        <h2 class="serif" style="font-size:30px;font-weight:700;color:#1A1A1F;letter-spacing:-0.5px;line-height:1.1;margin-top:6px;margin-bottom:14px;">Apa yang anda buat?</h2>
+
+        <!-- Role card 1 (selected) -->
+        <div class="aC-role-card sel">
+          <div>
+            <div class="aC-role-iw ind">
+              <svg style="width:36px;height:36px;color:#C8102E;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <p class="aC-role-name">Ejen Individu</p>
+            <p class="aC-role-desc">Saya bekerja sendiri. Urus klien, prospek, polisi dan komisyen sendiri.</p>
+            <div class="aC-features-row">
+              <span class="aC-feature-chip">Leads</span>
+              <span class="aC-feature-chip">Renewal</span>
+              <span class="aC-feature-chip">MDRT</span>
+            </div>
+          </div>
+          <svg style="position:absolute;top:14px;right:14px;width:14px;height:14px;color:white;z-index:1;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+
+        <!-- Role card 2 -->
+        <div class="aC-role-card">
+          <div>
+            <div class="aC-role-iw team">
+              <svg style="width:36px;height:36px;color:#0F52BA;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <p class="aC-role-name">Team Leader</p>
+            <p class="aC-role-desc">Saya ada ejen di bawah. Pantau, broadcast, latih ejen baru.</p>
+            <div class="aC-features-row">
+              <span class="aC-feature-chip">Team Dashboard</span>
+              <span class="aC-feature-chip">+3 lagi</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary" style="margin-top:14px;">Seterusnya →</button>
+      </div>
+    </div>
+    <p class="step-tag">① Role Picker</p>
+  </div>
+
+  <!-- Screen 2: Company picker -->
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div class="aC-company">
+        <div class="aB-progress" style="margin-bottom:24px;">
+          <button class="btn-ghost" style="padding:0;width:36px;height:36px;border-radius:50%;background:#F8F7F4;display:flex;align-items:center;justify-content:center;">
+            <svg style="width:16px;height:16px;color:#1A1A1F;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="aB-progress-bar"><div class="aB-progress-fill" style="width:66%;"></div></div>
+          <p class="aB-progress-text">2 / 3</p>
+        </div>
+
+        <p style="font-size:11px;color:#C8102E;font-weight:700;text-transform:uppercase;letter-spacing:2px;">SYARIKAT INSURANS</p>
+        <h2 class="serif" style="font-size:30px;font-weight:700;color:#1A1A1F;letter-spacing:-0.5px;line-height:1.1;margin-top:6px;">Pilih syarikat anda</h2>
+        <p style="font-size:12px;color:#7A7A8A;margin-top:6px;">AI proposal akan ditune ke produk syarikat ini.</p>
+
+        <div class="aC-cgrid">
+          <div class="aC-ccell sel">
+            <div class="aC-ccell-iw"><svg style="width:24px;height:24px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg></div>
+            <p class="aC-ccell-name">Great Eastern</p>
+          </div>
+          <div class="aC-ccell">
+            <div class="aC-ccell-iw"><svg style="width:24px;height:24px;color:#0F52BA;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M11 3L8 9l4 13 4-13-3-6"/></svg></div>
+            <p class="aC-ccell-name">AIA</p>
+          </div>
+          <div class="aC-ccell">
+            <div class="aC-ccell-iw"><svg style="width:24px;height:24px;color:#0F52BA;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <p class="aC-ccell-name">Prudential</p>
+          </div>
+          <div class="aC-ccell">
+            <div class="aC-ccell-iw"><svg style="width:24px;height:24px;color:#0F52BA;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg></div>
+            <p class="aC-ccell-name">Takaful Ikhlas</p>
+          </div>
+          <div class="aC-ccell">
+            <div class="aC-ccell-iw"><svg style="width:24px;height:24px;color:#0F52BA;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg></div>
+            <p class="aC-ccell-name">Manulife</p>
+          </div>
+          <div class="aC-ccell">
+            <div class="aC-ccell-iw"><svg style="width:24px;height:24px;color:#0F52BA;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+            <p class="aC-ccell-name">Lain-lain</p>
+          </div>
+        </div>
+
+        <div style="flex:1;"></div>
+        <button class="btn-primary">Seterusnya →</button>
+      </div>
+    </div>
+    <p class="step-tag">② Company Picker</p>
+  </div>
+
+  <!-- Screen 3: Plan picker -->
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div class="aC-plan">
+        <div class="aB-progress" style="margin-bottom:18px;">
+          <button class="btn-ghost" style="padding:0;width:36px;height:36px;border-radius:50%;background:#F8F7F4;display:flex;align-items:center;justify-content:center;">
+            <svg style="width:16px;height:16px;color:#1A1A1F;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="aB-progress-bar"><div class="aB-progress-fill" style="width:100%;"></div></div>
+          <p class="aB-progress-text">3 / 3</p>
+        </div>
+
+        <p style="font-size:11px;color:#C8102E;font-weight:700;text-transform:uppercase;letter-spacing:2px;">PILIH PAKEJ</p>
+        <h2 class="serif" style="font-size:28px;font-weight:700;color:#1A1A1F;letter-spacing:-0.5px;line-height:1.1;margin-top:6px;margin-bottom:14px;">Mula percuma</h2>
+
+        <!-- Free -->
+        <div class="aC-plan-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <p class="aC-plan-name">Percuma</p>
+            <p class="aC-plan-price" style="color:#1A1A1F;">RM 0</p>
+          </div>
+          <p style="font-size:11px;color:#7A7A8A;">50 lead · Renewal asas · Knowledge Hub</p>
+        </div>
+
+        <!-- Pro (selected) -->
+        <div class="aC-plan-card pro">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <p class="aC-plan-name">Pro</p>
+              <p style="font-size:10px;color:rgba(255,255,255,0.7);">RM 39 / bulan</p>
+            </div>
+            <p class="aC-plan-price">RM 39</p>
+          </div>
+          <p style="font-size:11px;color:rgba(255,255,255,0.85);">Unlimited lead · AI Proposal · WhatsApp · Content Creator</p>
+          <div class="aC-plan-feature"><svg style="width:11px;height:11px;color:#FCD34D;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>14 hari trial percuma</div>
+        </div>
+
+        <!-- Team -->
+        <div class="aC-plan-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <p class="aC-plan-name">Team</p>
+            <p class="aC-plan-price" style="color:#1A1A1F;">RM 199</p>
+          </div>
+          <p style="font-size:11px;color:#7A7A8A;">Untuk leader · Dashboard kumpulan · Broadcast · Leaderboard</p>
+        </div>
+
+        <div style="flex:1;"></div>
+        <button class="btn-primary">Mula Trial Pro →</button>
+      </div>
+    </div>
+    <p class="step-tag">③ Plan Picker</p>
+  </div>
+
+</div>
+
+</body>
+</html>
