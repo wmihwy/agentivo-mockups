@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ms" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leads Redesign — Options A/B/C</title>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: { colors: {
+  ruby:{ 500:'#C8102E',600:'#B22222',700:'#8B1E1E',800:'#5C1414' },
+  sapphire:{ 500:'#0F52BA',600:'#1C3F7A',700:'#152E5C',800:'#0D1E3D' },
+  ink:'#1A1A1F', inkm:'#7A7A8A', border:'#E4E4EC', cream:'#F8F7F4'
+}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0D1117;font-family:'DM Sans',system-ui,sans-serif;display:flex;justify-content:center;padding:40px 20px 60px;color:white;}
+.phone{width:390px;height:844px;background:#F8F7F4;border-radius:48px;overflow:hidden;position:relative;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 40px 80px rgba(0,0,0,0.7);
+  display:flex;flex-direction:column;}
+.pscroll{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding-bottom:96px;}
+.pscroll::-webkit-scrollbar{display:none;}
+.htrack{display:flex;overflow-x:auto;scrollbar-width:none;}
+.htrack::-webkit-scrollbar{display:none;}
+
+.phead{display:flex;align-items:center;gap:12px;padding:14px 20px 10px;}
+.pback{width:38px;height:38px;border-radius:50%;background:white;border:1px solid #E4E4EC;display:flex;align-items:center;justify-content:center;}
+.ptitle{flex:1;font-size:17px;font-weight:700;color:#1A1A1F;letter-spacing:-0.3px;}
+
+/* Floating nav */
+.fnav{position:absolute;bottom:16px;left:20px;right:20px;background:#1A1A1F;border-radius:26px;
+  padding:10px 8px;display:flex;justify-content:space-around;align-items:center;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);z-index:10;}
+.fnav-item{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:18px;cursor:pointer;}
+.fnav-item.active{background:white;}
+.fnav-item svg{width:20px;height:20px;}
+
+/* FAB */
+.fab{position:absolute;bottom:96px;right:20px;width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(145deg,#8B1E1E,#C8102E,#E03050);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 24px rgba(200,16,46,0.45);z-index:5;}
+
+.opt-tag{text-align:center;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-top:14px;}
+.opt-tag b{color:white;font-size:13px;display:block;margin-top:4px;}
+.opt-desc{text-align:center;font-size:11px;color:rgba(255,255,255,0.4);max-width:390px;margin:6px auto 0;line-height:1.5;}
+
+/* ═══════ OPTION A: KANBAN PIPELINE ═══════ */
+.kan-hero{margin:0 20px 12px;background:linear-gradient(145deg,#1A1A1F,#2A2A35);border-radius:20px;padding:16px 18px;position:relative;overflow:hidden;}
+.kan-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.05) 1px,transparent 1px);background-size:14px 14px;}
+.kan-search{margin:0 20px 12px;background:white;border:1px solid #E4E4EC;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:8px;}
+.kan-col-wrap{padding:0 0 0 20px;}
+.kan-col{min-width:260px;background:#EEF0F4;border-radius:18px;padding:14px;margin-right:10px;}
+.kan-col.hot{background:linear-gradient(180deg,#FDF5F5,#F8F7F4);border:1px solid #FAE0E0;}
+.kan-col.warm{background:linear-gradient(180deg,#FFFBEB,#F8F7F4);border:1px solid #FEF3C7;}
+.kan-col.cold{background:linear-gradient(180deg,#F0F6FF,#F8F7F4);border:1px solid #D6E8FC;}
+.kan-col-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.kan-col-t{display:flex;align-items:center;gap:7px;}
+.kan-col-c{font-size:9px;font-weight:700;padding:3px 8px;border-radius:8px;text-transform:uppercase;letter-spacing:1px;}
+.kan-col.hot .kan-col-c{background:#C8102E;color:white;}
+.kan-col.warm .kan-col-c{background:#F59E0B;color:white;}
+.kan-col.cold .kan-col-c{background:#0F52BA;color:white;}
+.kan-card{background:white;border-radius:14px;padding:11px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.kan-card-h{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
+.kan-av{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;}
+.kan-n{font-size:13px;font-weight:700;color:#1A1A1F;}
+.kan-s{font-size:10px;color:#7A7A8A;margin-top:1px;}
+.kan-meta{display:flex;align-items:center;gap:10px;padding-top:8px;border-top:1px dashed #E4E4EC;}
+.kan-pchip{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:#7A7A8A;}
+.kan-act-mini{display:flex;gap:4px;margin-left:auto;}
+.kan-bm{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;}
+
+/* ═══════ OPTION B: PRIORITY INBOX ═══════ */
+.pi-hero{margin:0 20px 12px;background:linear-gradient(145deg,#6B0F20,#C8102E,#E03050);border-radius:22px;padding:18px;position:relative;overflow:hidden;color:white;}
+.pi-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.1) 1px,transparent 1px);background-size:16px 16px;}
+.pi-stats{display:flex;gap:10px;margin-top:14px;position:relative;z-index:1;}
+.pi-st{flex:1;background:rgba(0,0,0,0.22);border-radius:12px;padding:8px 10px;}
+.pi-st-v{font-size:18px;font-weight:700;color:white;}
+.pi-st-l{font-size:9px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:1px;margin-top:1px;}
+.pi-section-h{display:flex;align-items:center;gap:8px;padding:12px 20px 8px;}
+.pi-section-iw{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;}
+.pi-section-t{font-size:13px;font-weight:700;color:#1A1A1F;}
+.pi-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;margin-left:auto;}
+.pi-priority{margin:0 20px 10px;background:white;border-radius:16px;border:1.5px solid #FAE0E0;padding:14px;box-shadow:0 4px 14px rgba(200,16,46,0.08);position:relative;overflow:hidden;}
+.pi-priority::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#C8102E,#E03050);}
+.pi-pri-h{display:flex;align-items:center;gap:11px;margin-bottom:10px;}
+.pi-pri-av{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:17px;flex-shrink:0;background:linear-gradient(145deg,#8B1E1E,#C8102E);box-shadow:0 4px 12px rgba(200,16,46,0.3);}
+.pi-pri-n{font-size:15px;font-weight:700;color:#1A1A1F;}
+.pi-pri-s{font-size:11px;color:#7A7A8A;margin-top:2px;}
+.pi-pri-stale{font-size:9px;font-weight:700;color:#8B1E1E;background:#FAE0E0;padding:2px 7px;border-radius:6px;}
+.pi-pri-tag{display:inline-flex;align-items:center;gap:4px;background:#FDF5F5;color:#8B1E1E;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;margin-top:5px;}
+.pi-pri-acts{display:flex;gap:6px;padding-top:10px;border-top:1px dashed #E4E4EC;}
+.pi-pri-act{flex:1;padding:9px;border-radius:11px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:11px;font-weight:700;color:white;}
+.pi-pri-act.call{background:#0F52BA;}
+.pi-pri-act.wa{background:#25D366;}
+.pi-pri-act.edit{background:#1A1A1F;flex:0 0 38px;}
+
+.pi-card{margin:0 20px 8px;background:white;border-radius:14px;padding:12px;border:1px solid #E4E4EC;display:flex;align-items:center;gap:11px;}
+.pi-card-av{width:38px;height:38px;border-radius:50%;color:white;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* ═══════ OPTION C: RICH VISUAL CARDS ═══════ */
+.rc-hero{margin:0 20px 12px;background:linear-gradient(145deg,#1A1A1F,#2A2A35);border-radius:22px;padding:20px;position:relative;overflow:hidden;color:white;}
+.rc-hero::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(200,16,46,0.18) 0%,transparent 70%);top:-70px;right:-50px;}
+.rc-hero-pct{font-size:42px;font-weight:700;color:white;letter-spacing:-1.5px;line-height:1;}
+.rc-hero-gain{font-size:11px;font-weight:600;color:#86EFAC;}
+
+.rc-filter-track{padding:4px 20px 12px;gap:7px;}
+.rc-fp{display:flex;align-items:center;gap:5px;padding:8px 13px;border-radius:14px;background:white;border:1px solid #E4E4EC;flex-shrink:0;}
+.rc-fp.active{background:#1A1A1F;border-color:#1A1A1F;}
+.rc-fp-c{font-size:9px;font-weight:700;background:#F8F7F4;padding:2px 6px;border-radius:5px;color:#1A1A1F;}
+.rc-fp.active .rc-fp-c{background:#D4AF37;color:white;}
+
+.rc-card{margin:0 20px 10px;background:white;border-radius:20px;padding:16px;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.04);}
+.rc-card.hot{border:1.5px solid rgba(200,16,46,0.2);box-shadow:0 6px 20px rgba(200,16,46,0.1);}
+.rc-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
+.rc-card.hot::before{background:linear-gradient(180deg,#C8102E,#E03050);}
+.rc-card.warm::before{background:#F59E0B;}
+.rc-card.cold::before{background:#0F52BA;}
+.rc-glow{position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(200,16,46,0.08) 0%,transparent 70%);pointer-events:none;}
+.rc-row1{display:flex;align-items:flex-start;gap:13px;margin-bottom:13px;}
+.rc-av{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;flex-shrink:0;}
+.rc-av.hot{background:linear-gradient(145deg,#8B1E1E,#C8102E);box-shadow:0 4px 14px rgba(200,16,46,0.3);}
+.rc-av.warm{background:linear-gradient(145deg,#B45309,#F59E0B);box-shadow:0 4px 14px rgba(180,83,9,0.3);}
+.rc-av.cold{background:linear-gradient(145deg,#1C3F7A,#0F52BA);box-shadow:0 4px 14px rgba(15,82,186,0.3);}
+.rc-n{font-size:16px;font-weight:700;color:#1A1A1F;letter-spacing:-0.2px;}
+.rc-meta{display:flex;align-items:center;gap:6px;margin-top:3px;}
+.rc-meta-i{font-size:10px;color:#7A7A8A;display:inline-flex;align-items:center;gap:3px;}
+.rc-prod{display:inline-flex;align-items:center;gap:5px;background:#FDF5F5;color:#8B1E1E;padding:4px 10px;border-radius:7px;font-size:10px;font-weight:700;margin-top:8px;}
+.rc-stat{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px;padding:11px;background:#F8F7F4;border-radius:12px;}
+.rc-stat-val{font-size:18px;font-weight:700;color:#C8102E;letter-spacing:-0.4px;}
+.rc-stat-l{font-size:10px;color:#7A7A8A;text-transform:uppercase;letter-spacing:0.8px;}
+.rc-timeline{display:flex;gap:3px;margin-top:8px;}
+.rc-dot{width:8px;height:8px;border-radius:50%;background:#E4E4EC;}
+.rc-dot.done{background:#10B981;}
+.rc-dot.cur{background:#C8102E;box-shadow:0 0 0 3px rgba(200,16,46,0.15);}
+.rc-actrow{display:flex;gap:7px;padding-top:11px;border-top:1px dashed #E4E4EC;}
+.rc-ab{flex:1;padding:10px;border-radius:11px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:11px;font-weight:700;color:white;}
+.rc-ab.call{background:#0F52BA;}
+.rc-ab.wa{background:#25D366;}
+.rc-ab.edit{flex:0 0 40px;background:white;border:1.5px solid #E4E4EC;color:#1A1A1F;}
+</style>
+</head>
+<body>
+<div class="flex flex-wrap gap-8 justify-center items-start">
+
+<!-- ═══════════════════════════════════════ -->
+<!-- OPTION A: KANBAN PIPELINE -->
+<!-- ═══════════════════════════════════════ -->
+<div>
+<div class="phone">
+  <div class="flex justify-between items-center px-7 pt-3 pb-1 text-xs font-semibold text-ink"><span>9:41</span><div class="flex gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+
+  <div class="pscroll">
+    <!-- Header -->
+    <div class="phead">
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <p class="ptitle">Leads & Prospek</p>
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg></div>
+    </div>
+
+    <!-- Hero dark -->
+    <div class="kan-hero" style="color:white;">
+      <div style="position:relative;z-index:1;">
+        <p class="text-[10px] font-bold text-white/55 uppercase tracking-widest">Pipeline Saya</p>
+        <p class="text-3xl font-bold text-white mt-2 tracking-tight">25 Lead</p>
+        <p class="text-[11px] text-white/60 mt-1">12 Hot · 8 Warm · 5 Cold · ~RM 84k potensi</p>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="kan-search">
+      <svg class="w-4 h-4 text-inkm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input placeholder="Cari nama, nombor..." style="flex:1;border:none;outline:none;font-family:inherit;font-size:13px;color:#1A1A1F;background:transparent;"/>
+    </div>
+
+    <!-- Kanban columns horizontal scroll -->
+    <div class="htrack kan-col-wrap">
+
+      <!-- HOT column -->
+      <div class="kan-col hot">
+        <div class="kan-col-h">
+          <div class="kan-col-t">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2.5"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            <p class="text-sm font-bold text-ink">Hot</p>
+          </div>
+          <span class="kan-col-c">12</span>
+        </div>
+
+        <div class="kan-card">
+          <div class="kan-card-h">
+            <div class="kan-av" style="background:linear-gradient(135deg,#8B1E1E,#C8102E);">M</div>
+            <div class="flex-1 min-w-0"><p class="kan-n">Maryam Zainal</p><p class="kan-s">2 jam · Medical Card</p></div>
+          </div>
+          <div class="kan-meta">
+            <span class="kan-pchip"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/></svg>RM 12k</span>
+            <div class="kan-act-mini">
+              <div class="kan-bm" style="background:#0F52BA;"><svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"/></svg></div>
+              <div class="kan-bm" style="background:#25D366;"><svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382"/></svg></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kan-card">
+          <div class="kan-card-h">
+            <div class="kan-av" style="background:linear-gradient(135deg,#8B1E1E,#C8102E);">A</div>
+            <div class="flex-1 min-w-0"><p class="kan-n">Ahmad Faris</p><p class="kan-s">Semalam · Life Insurance</p></div>
+          </div>
+          <div class="kan-meta">
+            <span class="kan-pchip"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/></svg>RM 8.4k</span>
+            <div class="kan-act-mini">
+              <div class="kan-bm" style="background:#0F52BA;"><svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"/></svg></div>
+              <div class="kan-bm" style="background:#25D366;"><svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382"/></svg></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kan-card">
+          <div class="kan-card-h">
+            <div class="kan-av" style="background:linear-gradient(135deg,#8B1E1E,#C8102E);">N</div>
+            <div class="flex-1 min-w-0"><p class="kan-n">Nur Aisyah</p><p class="kan-s">2 hari · Takaful</p></div>
+          </div>
+          <div class="kan-meta">
+            <span class="kan-pchip"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/></svg>RM 6.2k</span>
+            <div class="kan-act-mini">
+              <div class="kan-bm" style="background:#0F52BA;"><svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"/></svg></div>
+              <div class="kan-bm" style="background:#25D366;"><svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WARM column -->
+      <div class="kan-col warm">
+        <div class="kan-col-h">
+          <div class="kan-col-t">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5"><path d="M17 8h1a4 4 0 0 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/></svg>
+            <p class="text-sm font-bold text-ink">Warm</p>
+          </div>
+          <span class="kan-col-c">8</span>
+        </div>
+        <div class="kan-card">
+          <div class="kan-card-h">
+            <div class="kan-av" style="background:linear-gradient(135deg,#B45309,#F59E0B);">S</div>
+            <div class="flex-1 min-w-0"><p class="kan-n">Siti Rahayu</p><p class="kan-s">3 hari · Quotation sent</p></div>
+          </div>
+        </div>
+        <div class="kan-card">
+          <div class="kan-card-h">
+            <div class="kan-av" style="background:linear-gradient(135deg,#B45309,#F59E0B);">F</div>
+            <div class="flex-1 min-w-0"><p class="kan-n">Faizah Mohd</p><p class="kan-s">4 hari · Medical</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLD column -->
+      <div class="kan-col cold" style="margin-right:20px;">
+        <div class="kan-col-h">
+          <div class="kan-col-t">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#0F52BA" stroke-width="2.5"><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+            <p class="text-sm font-bold text-ink">Cold</p>
+          </div>
+          <span class="kan-col-c">5</span>
+        </div>
+        <div class="kan-card">
+          <div class="kan-card-h">
+            <div class="kan-av" style="background:linear-gradient(135deg,#1C3F7A,#0F52BA);">R</div>
+            <div class="flex-1 min-w-0"><p class="kan-n">Rashid Yahaya</p><p class="kan-s">1 minggu</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="fab"><svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+
+  <div class="fnav">
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+    <div class="fnav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="1.75"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span class="text-xs font-bold text-ink">Leads</span></div>
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg></div>
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><circle cx="12" cy="12" r="3"/></svg></div>
+  </div>
+</div>
+<p class="opt-tag">Option A<b>Kanban Pipeline</b></p>
+<p class="opt-desc">Swipe kiri/kanan antara column Hot → Warm → Cold. Setiap column scroll vertical sendiri. Visual pipeline yang jelas.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- OPTION B: PRIORITY INBOX -->
+<!-- ═══════════════════════════════════════ -->
+<div>
+<div class="phone">
+  <div class="flex justify-between items-center px-7 pt-3 pb-1 text-xs font-semibold text-ink"><span>9:41</span><div class="flex gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+
+  <div class="pscroll">
+    <div class="phead">
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <p class="ptitle">Leads & Prospek</p>
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+    </div>
+
+    <!-- Ruby hero with closing rate -->
+    <div class="pi-hero">
+      <div style="position:relative;z-index:1;">
+        <p class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Pipeline Mei 2026</p>
+        <p class="text-[42px] font-bold text-white mt-2 leading-none tracking-tight">25 Lead</p>
+        <p class="text-[11px] text-white/65 mt-1">~RM 84k potensi closing</p>
+        <div class="pi-stats">
+          <div class="pi-st"><p class="pi-st-v">12</p><p class="pi-st-l">Hot</p></div>
+          <div class="pi-st"><p class="pi-st-v">8</p><p class="pi-st-l">Warm</p></div>
+          <div class="pi-st"><p class="pi-st-v">5</p><p class="pi-st-l">Cold</p></div>
+          <div class="pi-st"><p class="pi-st-v">28%</p><p class="pi-st-l">Closing</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: URGENT - perlu action sekarang -->
+    <div class="pi-section-h">
+      <div class="pi-section-iw" style="background:#FAE0E0;"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+      <p class="pi-section-t">Perlu Action Sekarang</p>
+      <span class="pi-badge" style="background:#FAE0E0;color:#8B1E1E;">3 urgent</span>
+    </div>
+
+    <!-- Priority lead card (rich) -->
+    <div class="pi-priority">
+      <div class="pi-pri-h">
+        <div class="pi-pri-av">M</div>
+        <div class="flex-1 min-w-0">
+          <p class="pi-pri-n">Maryam Zainal</p>
+          <p class="pi-pri-s">+60 12-345 6789 · Bincang medical card</p>
+          <div style="display:flex;gap:6px;align-items:center;margin-top:5px;">
+            <span class="pi-pri-tag"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>Hot Lead</span>
+            <span style="font-size:10px;color:#7A7A8A;">·</span>
+            <span style="font-size:10px;font-weight:600;color:#1A1A1F;">RM 12k potensi</span>
+          </div>
+        </div>
+        <span class="pi-pri-stale">2 hari</span>
+      </div>
+      <div class="pi-pri-acts">
+        <div class="pi-pri-act call"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"/></svg>Call</div>
+        <div class="pi-pri-act wa"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382"/></svg>WhatsApp</div>
+        <div class="pi-pri-act edit"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg></div>
+      </div>
+    </div>
+
+    <div class="pi-priority">
+      <div class="pi-pri-h">
+        <div class="pi-pri-av">A</div>
+        <div class="flex-1 min-w-0">
+          <p class="pi-pri-n">Ahmad Faris</p>
+          <p class="pi-pri-s">+60 13-555 1234 · Tunggu quotation</p>
+          <div style="display:flex;gap:6px;align-items:center;margin-top:5px;">
+            <span class="pi-pri-tag"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>Hot Lead</span>
+            <span style="font-size:10px;color:#7A7A8A;">·</span>
+            <span style="font-size:10px;font-weight:600;color:#1A1A1F;">RM 8.4k potensi</span>
+          </div>
+        </div>
+        <span class="pi-pri-stale">Semalam</span>
+      </div>
+      <div class="pi-pri-acts">
+        <div class="pi-pri-act call"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"/></svg>Call</div>
+        <div class="pi-pri-act wa"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382"/></svg>WhatsApp</div>
+        <div class="pi-pri-act edit"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg></div>
+      </div>
+    </div>
+
+    <!-- Section: Lain-lain -->
+    <div class="pi-section-h">
+      <div class="pi-section-iw" style="background:#D6E8FC;"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#0F52BA" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+      <p class="pi-section-t">Lain-lain (22)</p>
+    </div>
+
+    <div class="pi-card">
+      <div class="pi-card-av" style="background:linear-gradient(135deg,#B45309,#F59E0B);">S</div>
+      <div class="flex-1 min-w-0">
+        <p style="font-size:13px;font-weight:700;color:#1A1A1F;">Siti Rahayu</p>
+        <p style="font-size:11px;color:#7A7A8A;margin-top:1px;">3 hari · Quotation sent</p>
+      </div>
+      <span style="font-size:9px;font-weight:700;color:#78350F;background:#FEF3C7;padding:3px 7px;border-radius:5px;">WARM</span>
+    </div>
+
+    <div class="pi-card">
+      <div class="pi-card-av" style="background:linear-gradient(135deg,#1C3F7A,#0F52BA);">R</div>
+      <div class="flex-1 min-w-0">
+        <p style="font-size:13px;font-weight:700;color:#1A1A1F;">Rashid Yahaya</p>
+        <p style="font-size:11px;color:#7A7A8A;margin-top:1px;">1 minggu · Tiada respond</p>
+      </div>
+      <span style="font-size:9px;font-weight:700;color:#152E5C;background:#D6E8FC;padding:3px 7px;border-radius:5px;">COLD</span>
+    </div>
+  </div>
+
+  <div class="fab"><svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+
+  <div class="fnav">
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+    <div class="fnav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="1.75"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span class="text-xs font-bold text-ink">Leads</span></div>
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg></div>
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><line x1="18" y1="20" x2="18" y2="10"/></svg></div>
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><circle cx="12" cy="12" r="3"/></svg></div>
+  </div>
+</div>
+<p class="opt-tag">Option B<b>Priority Inbox</b></p>
+<p class="opt-desc">Hot/urgent leads di atas dengan action button besar (Call + WhatsApp). Lain-lain leads compact di bawah. Focus: apa nak buat sekarang.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- OPTION C: RICH VISUAL CARDS -->
+<!-- ═══════════════════════════════════════ -->
+<div>
+<div class="phone">
+  <div class="flex justify-between items-center px-7 pt-3 pb-1 text-xs font-semibold text-ink"><span>9:41</span><div class="flex gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+
+  <div class="pscroll">
+    <div class="phead">
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <p class="ptitle">Leads & Prospek</p>
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+    </div>
+
+    <!-- Dark hero with conversion rate -->
+    <div class="rc-hero">
+      <div style="position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <p class="text-[10px] font-bold text-white/55 uppercase tracking-widest">Closing Rate · Mei</p>
+          <p class="rc-hero-pct">28%</p>
+          <p class="rc-hero-gain mt-1">↑ 5.2% vs April</p>
+        </div>
+        <div class="text-right">
+          <p class="text-[10px] text-white/55 uppercase tracking-widest">Lead Aktif</p>
+          <p class="text-3xl font-bold text-white mt-1">25</p>
+          <p class="text-[11px] text-white/55">RM 84k potensi</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter pills with counts (compact) -->
+    <div class="htrack rc-filter-track" style="display:flex;">
+      <div class="rc-fp active"><span class="text-[11px] font-bold text-white">Semua</span><span class="rc-fp-c">25</span></div>
+      <div class="rc-fp">
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2.5"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0z"/></svg>
+        <span class="text-[11px] font-semibold text-inkm">Hot</span><span class="rc-fp-c">12</span>
+      </div>
+      <div class="rc-fp">
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5"><path d="M17 8h1a4 4 0 0 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/></svg>
+        <span class="text-[11px] font-semibold text-inkm">Warm</span><span class="rc-fp-c">8</span>
+      </div>
+      <div class="rc-fp">
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#0F52BA" stroke-width="2.5"><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+        <span class="text-[11px] font-semibold text-inkm">Cold</span><span class="rc-fp-c">5</span>
+      </div>
+    </div>
+
+    <!-- Rich lead card with all info -->
+    <div class="rc-card hot">
+      <div class="rc-glow"></div>
+      <div class="rc-row1">
+        <div class="rc-av hot">M</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-1.5">
+            <p class="rc-n">Maryam Zainal</p>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#C8102E" stroke="none"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          </div>
+          <div class="rc-meta">
+            <span class="rc-meta-i"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"/></svg>+60 12-345 6789</span>
+          </div>
+          <span class="rc-prod">
+            <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg>
+            Medical Card
+          </span>
+        </div>
+      </div>
+
+      <div class="rc-stat">
+        <div>
+          <p class="rc-stat-l">Potensi Premium</p>
+          <p class="rc-stat-val">RM 12,000<span style="font-size:11px;color:#7A7A8A;font-weight:600;"> /thn</span></p>
+        </div>
+        <div style="text-align:right;">
+          <p class="rc-stat-l">Last Contact</p>
+          <p style="font-size:13px;font-weight:700;color:#1A1A1F;margin-top:3px;">2 jam lalu</p>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;">
+        <p style="font-size:10px;color:#7A7A8A;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;">Progress Pipeline</p>
+        <div class="rc-timeline">
+          <div class="rc-dot done"></div>
+          <div class="rc-dot done"></div>
+          <div class="rc-dot done"></div>
+          <div class="rc-dot cur"></div>
+          <div class="rc-dot"></div>
+        </div>
+      </div>
+
+      <div class="rc-actrow">
+        <div class="rc-ab call"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"/></svg>Call</div>
+        <div class="rc-ab wa"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382"/></svg>WhatsApp</div>
+        <div class="rc-ab edit"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg></div>
+      </div>
+    </div>
+
+    <!-- Warm card example -->
+    <div class="rc-card">
+      <div class="rc-row1">
+        <div class="rc-av warm">S</div>
+        <div class="flex-1 min-w-0">
+          <p class="rc-n">Siti Rahayu</p>
+          <div class="rc-meta">
+            <span class="rc-meta-i"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"/></svg>+60 19-987 6543</span>
+          </div>
+          <span class="rc-prod" style="background:#FEF3C7;color:#78350F;">
+            <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg>
+            Life Insurance
+          </span>
+        </div>
+      </div>
+      <div class="rc-stat">
+        <div><p class="rc-stat-l">Potensi</p><p class="rc-stat-val" style="color:#B45309;">RM 6,400</p></div>
+        <div style="text-align:right;"><p class="rc-stat-l">Last Contact</p><p style="font-size:13px;font-weight:700;color:#1A1A1F;margin-top:3px;">3 hari lalu</p></div>
+      </div>
+      <div class="rc-actrow">
+        <div class="rc-ab call"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3"/></svg>Call</div>
+        <div class="rc-ab wa"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382"/></svg>WhatsApp</div>
+        <div class="rc-ab edit"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fab"><svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+
+  <div class="fnav">
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+    <div class="fnav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="1.75"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span class="text-xs font-bold text-ink">Leads</span></div>
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg></div>
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><line x1="18" y1="20" x2="18" y2="10"/></svg></div>
+    <div class="fnav-item"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A8A" stroke-width="1.75"><circle cx="12" cy="12" r="3"/></svg></div>
+  </div>
+</div>
+<p class="opt-tag">Option C<b>Rich Visual Cards</b></p>
+<p class="opt-desc">Card lead besar dengan semua info: avatar gradient, produk insurans, potensi premium, last contact, pipeline progress dots, action buttons besar.</p>
+</div>
+
+</div>
+</body>
+</html>
