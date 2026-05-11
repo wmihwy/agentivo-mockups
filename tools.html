@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ms" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tools & Features — Mockup</title>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: { colors: {
+  ruby:{ 500:'#C8102E',600:'#B22222',700:'#8B1E1E' },
+  sapphire:{ 500:'#0F52BA',600:'#1C3F7A',700:'#152E5C',800:'#0D1E3D' },
+  ink:'#1A1A1F', inkm:'#7A7A8A', cream:'#F8F7F4'
+}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0D1117;font-family:'DM Sans',system-ui,sans-serif;display:flex;justify-content:center;padding:40px 20px 60px;color:white;}
+.phone{width:390px;height:844px;background:#F8F7F4;border-radius:48px;overflow:hidden;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 40px 80px rgba(0,0,0,0.7);display:flex;flex-direction:column;}
+.pscroll{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding-bottom:30px;}
+.pscroll::-webkit-scrollbar{display:none;}
+.htrack{display:flex;overflow-x:auto;gap:8px;padding:4px 20px 6px;scrollbar-width:none;}
+.htrack::-webkit-scrollbar{display:none;}
+
+.phead{display:flex;align-items:center;gap:12px;padding:14px 20px 10px;}
+.pback{width:38px;height:38px;border-radius:50%;background:white;border:1px solid #E4E4EC;display:flex;align-items:center;justify-content:center;}
+.ptitle{flex:1;font-size:17px;font-weight:700;color:#1A1A1F;letter-spacing:-0.3px;}
+
+.hero{margin:0 20px 12px;border-radius:22px;padding:18px;position:relative;overflow:hidden;color:white;}
+.hero-z{position:relative;z-index:1;}
+
+.h-wa{background:linear-gradient(145deg,#064E3B,#059669,#10B981);box-shadow:0 6px 24px rgba(5,150,105,0.4);}
+.h-wa::after{content:'';position:absolute;right:-10px;bottom:-10px;width:100px;height:90px;border-radius:18px 18px 4px 18px;border:2px solid rgba(255,255,255,0.12);pointer-events:none;}
+
+.h-content{background:linear-gradient(145deg,#831843,#BE185D,#EC4899);box-shadow:0 6px 24px rgba(190,24,93,0.4);}
+.h-content::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(-45deg,rgba(255,255,255,0.06) 0px,rgba(255,255,255,0.06) 4px,transparent 4px,transparent 14px);pointer-events:none;}
+
+.h-kh{background:linear-gradient(145deg,#0D1E3D,#1C3F7A,#0F52BA);box-shadow:0 6px 24px rgba(28,63,122,0.4);}
+
+.h-ai{background:linear-gradient(145deg,#3B0764,#6D28D9,#8B5CF6);box-shadow:0 6px 24px rgba(109,40,217,0.4);}
+.h-ai::before{content:'✦';position:absolute;right:20px;top:14px;font-size:28px;color:rgba(255,255,255,0.18);line-height:1;pointer-events:none;}
+.h-ai::after{content:'✧';position:absolute;right:50px;bottom:14px;font-size:18px;color:rgba(255,255,255,0.15);line-height:1;pointer-events:none;}
+
+.h-profile{background:linear-gradient(145deg,#5C1414,#8B1E1E,#C8102E);box-shadow:0 6px 24px rgba(200,16,46,0.4);}
+.h-profile::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.1) 1px,transparent 1px);background-size:14px 14px;pointer-events:none;}
+
+.h-ref{background:linear-gradient(145deg,#7C2D12,#C2410C,#EA580C);box-shadow:0 6px 24px rgba(194,65,12,0.4);}
+
+/* Section title */
+.sect-eye{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:0 20px;color:#C8102E;}
+.sect-t{font-size:18px;font-weight:700;color:#1A1A1F;padding:2px 20px 12px;letter-spacing:-0.3px;}
+
+/* Template card */
+.tmpl{margin:0 20px 8px;background:white;border:1px solid #E4E4EC;border-radius:18px;padding:13px;position:relative;}
+.tmpl-h{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.tmpl-cat{font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:0.8px;}
+.cat-bday{background:#FAE8E8;color:#C8102E;}
+.cat-renew{background:#FEF3C7;color:#B45309;}
+.cat-fu{background:#D6E8FC;color:#0F52BA;}
+.cat-aniv{background:#EDE9FE;color:#6D28D9;}
+.tmpl-name{font-size:13px;font-weight:700;color:#1A1A1F;flex:1;}
+.tmpl-prev{font-size:11px;color:#7A7A8A;line-height:1.5;background:#F8F7F4;padding:8px 10px;border-radius:10px;border-left:3px solid #25D366;}
+.tmpl-use{display:inline-flex;align-items:center;gap:5px;background:#25D366;color:white;padding:7px 12px;border-radius:9px;font-size:11px;font-weight:700;margin-top:8px;}
+
+/* Content cards */
+.cgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:0 20px 12px;}
+.ccard{background:white;border:1px solid #E4E4EC;border-radius:16px;overflow:hidden;}
+.ccard-img{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:42px;}
+.ccard-img.bd{background:linear-gradient(145deg,#FAE0E0,#F5B0B0);}
+.ccard-img.tip{background:linear-gradient(145deg,#D6E8FC,#A8C8F5);}
+.ccard-img.quote{background:linear-gradient(145deg,#FEF3C7,#FDE68A);}
+.ccard-img.promo{background:linear-gradient(145deg,#EDE9FE,#DDD6FE);}
+.ccard-b{padding:9px;}
+.ccard-name{font-size:11px;font-weight:600;color:#1A1A1F;}
+.ccard-sub{font-size:9px;color:#7A7A8A;margin-top:1px;}
+
+/* AI caption box */
+.ai-box{margin:0 20px 12px;background:linear-gradient(145deg,#EDE9FE,#F5F3FF);border:1px solid #DDD6FE;border-radius:16px;padding:14px;}
+.ai-tag{display:inline-flex;align-items:center;gap:5px;background:#6D28D9;color:white;padding:4px 9px;border-radius:8px;font-size:10px;font-weight:700;}
+.ai-text{font-size:12px;line-height:1.6;color:#1A1A1F;margin-top:9px;}
+
+/* Knowledge category card */
+.kcard{margin:0 20px 8px;background:white;border:1px solid #E4E4EC;border-radius:16px;padding:13px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;}
+.kcard-iw{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.kcard-iw.bnm{background:linear-gradient(145deg,#0D1E3D,#0F52BA);}
+.kcard-iw.exam{background:linear-gradient(145deg,#8B1E1E,#C8102E);}
+.kcard-iw.video{background:linear-gradient(145deg,#7C2D12,#EA580C);}
+.kcard-iw.quiz{background:linear-gradient(145deg,#0D7A0F,#10B981);}
+.kcard-t{font-size:14px;font-weight:700;color:#1A1A1F;}
+.kcard-s{font-size:11px;color:#7A7A8A;margin-top:1px;}
+.kcard-count{background:#F8F7F4;color:#7A7A8A;padding:3px 9px;border-radius:8px;font-size:11px;font-weight:700;}
+
+/* Article row */
+.art{margin:0 20px 8px;background:white;border:1px solid #E4E4EC;border-radius:14px;padding:11px;display:flex;align-items:center;gap:10px;}
+.art-img{width:50px;height:50px;border-radius:10px;background:linear-gradient(145deg,#FEF3C7,#FDE68A);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.art-t{font-size:12px;font-weight:600;color:#1A1A1F;line-height:1.3;}
+.art-s{font-size:10px;color:#7A7A8A;margin-top:2px;}
+
+/* AI proposal flow */
+.steps-mini{display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 20px 16px;}
+.step-c{width:22px;height:22px;border-radius:50%;background:#E4E4EC;color:#7A7A8A;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.step-c.act{background:linear-gradient(145deg,#6D28D9,#8B5CF6);color:white;}
+.step-c.done{background:#10B981;color:white;}
+.step-l{width:18px;height:2px;background:#E4E4EC;}
+.step-l.done{background:#10B981;}
+
+.fgroup{margin:0 20px 12px;}
+.flabel{font-size:11px;font-weight:600;color:#7A7A8A;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;display:block;}
+.finput{width:100%;background:white;border:1.5px solid #E4E4EC;border-radius:14px;padding:13px 14px;font-family:inherit;font-size:14px;color:#1A1A1F;outline:none;}
+
+/* AI suggestion bubble */
+.aisug{margin:0 20px 8px;background:linear-gradient(145deg,#F5F3FF,#FAF5FF);border:1.5px solid #DDD6FE;border-radius:16px;padding:13px;position:relative;}
+.aisug::before{content:'✦ AI cadang';position:absolute;top:-9px;left:14px;background:#6D28D9;color:white;font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;letter-spacing:0.5px;}
+.aisug-t{font-size:13px;font-weight:700;color:#5B21B6;margin-top:4px;}
+.aisug-s{font-size:11px;color:#7A7A8A;line-height:1.5;margin-top:4px;}
+.aisug-pr{display:inline-block;background:#6D28D9;color:white;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;margin-top:6px;}
+
+/* Profile mini website */
+.pweb{margin:0 20px 12px;background:white;border-radius:18px;padding:0;overflow:hidden;border:1px solid #E4E4EC;}
+.pweb-cover{height:80px;background:linear-gradient(145deg,#6B0F20,#C8102E,#E03050);position:relative;}
+.pweb-cover::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.1) 1px,transparent 1px);background-size:12px 12px;}
+.pweb-av{width:64px;height:64px;border-radius:50%;background:white;border:3px solid white;position:absolute;left:14px;bottom:-32px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#C8102E;box-shadow:0 4px 14px rgba(0,0,0,0.1);}
+.pweb-b{padding:40px 14px 14px;}
+.pweb-name{font-size:16px;font-weight:700;color:#1A1A1F;letter-spacing:-0.3px;}
+.pweb-lic{font-size:11px;color:#7A7A8A;margin-top:1px;}
+.pweb-bio{font-size:12px;color:#3D3D45;line-height:1.5;margin-top:8px;}
+.pweb-stats{display:flex;gap:6px;margin-top:11px;}
+.pweb-stat{flex:1;background:#FDF5F5;border-radius:9px;padding:7px;text-align:center;}
+.pweb-sv{font-size:14px;font-weight:700;color:#C8102E;}
+.pweb-sl{font-size:9px;color:#7A7A8A;text-transform:uppercase;letter-spacing:0.5px;margin-top:1px;}
+
+/* QR row */
+.qrrow{margin:0 20px 12px;background:white;border:1px solid #E4E4EC;border-radius:16px;padding:13px;display:flex;align-items:center;gap:12px;}
+.qr-img{width:64px;height:64px;background:white;border:1px solid #E4E4EC;border-radius:10px;padding:5px;flex-shrink:0;display:grid;grid-template-columns:repeat(7,1fr);gap:1px;}
+.qr-cell{background:#1A1A1F;}
+.qr-cell.w{background:white;}
+.qr-t{font-size:13px;font-weight:700;color:#1A1A1F;}
+.qr-l{font-size:10px;color:#7A7A8A;margin-top:2px;font-family:'DM Mono',monospace;}
+
+/* Referral big stat */
+.ref-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 20px 12px;}
+.ref-s{background:white;border:1px solid #E4E4EC;border-radius:14px;padding:13px;}
+.ref-sv{font-size:22px;font-weight:700;letter-spacing:-0.4px;}
+.ref-sl{font-size:10px;color:#7A7A8A;text-transform:uppercase;letter-spacing:1px;margin-top:3px;}
+
+/* Referral link card */
+.reflink{margin:0 20px 12px;background:linear-gradient(145deg,#1A1A1F,#222228);border-radius:16px;padding:14px;}
+.reflink-l{font-size:9px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;}
+.reflink-u{font-size:13px;color:white;font-family:'DM Mono',monospace;margin-top:5px;display:flex;align-items:center;gap:8px;}
+.reflink-btn{background:linear-gradient(145deg,#C8102E,#E03050);color:white;padding:6px 12px;border-radius:9px;font-size:11px;font-weight:700;margin-left:auto;}
+
+/* Referrer row */
+.refr{margin:0 20px 8px;background:white;border:1px solid #E4E4EC;border-radius:14px;padding:11px;display:flex;align-items:center;gap:11px;}
+.refr-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(145deg,#C2410C,#EA580C);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:15px;flex-shrink:0;}
+.refr-n{font-size:13px;font-weight:700;color:#1A1A1F;}
+.refr-s{font-size:11px;color:#7A7A8A;margin-top:1px;}
+.refr-c{background:#FEF3C7;color:#78350F;font-weight:700;padding:4px 9px;border-radius:8px;font-size:11px;}
+
+.ptag{text-align:center;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-top:14px;}
+</style>
+</head>
+<body>
+<div class="flex flex-wrap gap-8 justify-center items-start">
+
+<!-- ═══════ PAGE 1: WHATSAPP TEMPLATES ═══════ -->
+<div>
+<div class="phone">
+  <div class="flex justify-between items-center px-7 pt-3 pb-1 text-xs font-semibold text-ink"><span>9:41</span><div class="flex gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+
+  <div class="pscroll">
+    <div class="phead">
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <p class="ptitle">WhatsApp Templates</p>
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+    </div>
+
+    <div class="hero h-wa">
+      <div class="hero-z">
+        <p class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Mesej Auto-Generate</p>
+        <p class="text-3xl font-bold text-white mt-2 tracking-tight">18 Template</p>
+        <p class="text-[11px] text-white/65 mt-1">Klik 1 butang → WhatsApp dengan mesej siap</p>
+      </div>
+    </div>
+
+    <div class="htrack">
+      <div style="flex-shrink:0;padding:7px 13px;border-radius:14px;font-size:11px;font-weight:600;background:#1A1A1F;color:white;white-space:nowrap;">Semua</div>
+      <div style="flex-shrink:0;padding:7px 13px;border-radius:14px;font-size:11px;font-weight:600;background:white;border:1px solid #E4E4EC;color:#7A7A8A;white-space:nowrap;">🎂 Hari Jadi</div>
+      <div style="flex-shrink:0;padding:7px 13px;border-radius:14px;font-size:11px;font-weight:600;background:white;border:1px solid #E4E4EC;color:#7A7A8A;white-space:nowrap;">🔄 Renewal</div>
+      <div style="flex-shrink:0;padding:7px 13px;border-radius:14px;font-size:11px;font-weight:600;background:white;border:1px solid #E4E4EC;color:#7A7A8A;white-space:nowrap;">👋 Follow-up</div>
+      <div style="flex-shrink:0;padding:7px 13px;border-radius:14px;font-size:11px;font-weight:600;background:white;border:1px solid #E4E4EC;color:#7A7A8A;white-space:nowrap;">🎉 Anniversary</div>
+    </div>
+
+    <div class="tmpl">
+      <div class="tmpl-h"><span class="tmpl-cat cat-bday">🎂 Hari Jadi</span><p class="tmpl-name">Wish Standard</p></div>
+      <div class="tmpl-prev">Salam <b style="color:#0F52BA;">{nama}</b>! Selamat Hari Jadi yang ke-<b style="color:#0F52BA;">{umur}</b> 🎉 Semoga panjang umur & sentiasa dirahmati...</div>
+      <div class="tmpl-use">✓ Guna Template</div>
+    </div>
+
+    <div class="tmpl">
+      <div class="tmpl-h"><span class="tmpl-cat cat-renew">🔄 Renewal</span><p class="tmpl-name">30 Hari Sebelum</p></div>
+      <div class="tmpl-prev">Hi <b style="color:#0F52BA;">{nama}</b>, ingatan polisi <b style="color:#0F52BA;">{produk}</b> akan tamat pada <b style="color:#0F52BA;">{tarikh}</b>. Sila confirm renewal premium <b style="color:#0F52BA;">{premium}</b>...</div>
+      <div class="tmpl-use">✓ Guna Template</div>
+    </div>
+
+    <div class="tmpl">
+      <div class="tmpl-h"><span class="tmpl-cat cat-fu">👋 Follow-up</span><p class="tmpl-name">Selepas Mesyuarat</p></div>
+      <div class="tmpl-prev">Terima kasih atas masa <b style="color:#0F52BA;">{nama}</b> tadi. Saya hantar quotation seperti yang dibincangkan. Sila review & jika ada soalan...</div>
+      <div class="tmpl-use">✓ Guna Template</div>
+    </div>
+  </div>
+</div>
+<p class="ptag">① WhatsApp Templates</p>
+</div>
+
+<!-- ═══════ PAGE 2: CONTENT CREATOR ═══════ -->
+<div>
+<div class="phone">
+  <div class="flex justify-between items-center px-7 pt-3 pb-1 text-xs font-semibold text-ink"><span>9:41</span><div class="flex gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+
+  <div class="pscroll">
+    <div class="phead">
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <p class="ptitle">Content Creator</p>
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/></svg></div>
+    </div>
+
+    <div class="hero h-content">
+      <div class="hero-z">
+        <p class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Social Media Tools</p>
+        <p class="text-2xl font-bold text-white mt-2 tracking-tight">42 Template Post</p>
+        <p class="text-[11px] text-white/65 mt-1">AI caption BM/BI · Content calendar · Auto-schedule</p>
+      </div>
+    </div>
+
+    <p class="sect-eye" style="color:#EC4899;">TEMPLATE POST</p>
+    <p class="sect-t">Pilih Template</p>
+
+    <div class="cgrid">
+      <div class="ccard"><div class="ccard-img bd">🎂</div><div class="ccard-b"><p class="ccard-name">Birthday Wish</p><p class="ccard-sub">12 template</p></div></div>
+      <div class="ccard"><div class="ccard-img tip">💡</div><div class="ccard-b"><p class="ccard-name">Tip Insurans</p><p class="ccard-sub">18 template</p></div></div>
+      <div class="ccard"><div class="ccard-img quote">"</div><div class="ccard-b"><p class="ccard-name">Quote Motivasi</p><p class="ccard-sub">8 template</p></div></div>
+      <div class="ccard"><div class="ccard-img promo">🎁</div><div class="ccard-b"><p class="ccard-name">Promo & Offer</p><p class="ccard-sub">6 template</p></div></div>
+    </div>
+
+    <p class="sect-eye" style="color:#EC4899;">AI ASSISTANT</p>
+    <p class="sect-t">Auto Caption</p>
+
+    <div class="ai-box">
+      <div class="flex items-center gap-2">
+        <span class="ai-tag">✦ AI</span>
+        <span class="text-[11px] text-inkm">Bahasa: <b>BM</b></span>
+      </div>
+      <p class="ai-text">Tahukah anda? <b>72%</b> rakyat Malaysia tiada cukup perlindungan kesihatan. Bila kos perubatan mencecah RM100k untuk rawatan kanser, adakah simpanan anda mampu? 💭<br><br>📌 Medical card mulai <b>RM150/bulan</b><br>📌 Tutup hospital private<br>📌 No claim no payment<br><br>DM sekarang untuk free consultation!</p>
+      <div style="display:flex;gap:6px;margin-top:11px;">
+        <div style="flex:1;background:#6D28D9;color:white;text-align:center;padding:8px;border-radius:10px;font-size:11px;font-weight:700;">📋 Copy</div>
+        <div style="flex:1;background:white;color:#6D28D9;border:1.5px solid #DDD6FE;text-align:center;padding:8px;border-radius:10px;font-size:11px;font-weight:700;">🔄 Regenerate</div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="ptag">② Content Creator</p>
+</div>
+
+<!-- ═══════ PAGE 3: KNOWLEDGE HUB ═══════ -->
+<div>
+<div class="phone">
+  <div class="flex justify-between items-center px-7 pt-3 pb-1 text-xs font-semibold text-ink"><span>9:41</span><div class="flex gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+
+  <div class="pscroll">
+    <div class="phead">
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <p class="ptitle">Knowledge Hub</p>
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+    </div>
+
+    <div class="hero h-kh">
+      <div class="hero-z">
+        <p class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Belajar & Naik Pangkat</p>
+        <p class="text-2xl font-bold text-white mt-2 tracking-tight">Nota & Quiz</p>
+        <p class="text-[11px] text-white/65 mt-1">PCEIA · TBE · CEILLI · BNM Updates</p>
+      </div>
+    </div>
+
+    <p class="sect-eye" style="color:#0F52BA;">KATEGORI</p>
+    <p class="sect-t">Topik</p>
+
+    <div class="kcard">
+      <div class="kcard-iw bnm"><svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="flex-1"><p class="kcard-t">BNM Updates</p><p class="kcard-s">Garis panduan & regulasi</p></div>
+      <span class="kcard-count">24</span>
+    </div>
+    <div class="kcard">
+      <div class="kcard-iw exam"><svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div class="flex-1"><p class="kcard-t">PCEIA Notes</p><p class="kcard-s">Pre-Contract Examination</p></div>
+      <span class="kcard-count">38</span>
+    </div>
+    <div class="kcard">
+      <div class="kcard-iw video"><svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+      <div class="flex-1"><p class="kcard-t">Training Video</p><p class="kcard-s">Sales & closing technique</p></div>
+      <span class="kcard-count">15</span>
+    </div>
+    <div class="kcard">
+      <div class="kcard-iw quiz"><svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/></svg></div>
+      <div class="flex-1"><p class="kcard-t">Quiz & Mock Exam</p><p class="kcard-s">Latihan PCEIA & TBE</p></div>
+      <span class="kcard-count">12</span>
+    </div>
+
+    <p class="sect-eye" style="color:#0F52BA;" class="mt-3">TERKINI</p>
+    <p class="sect-t">Artikel Baru</p>
+
+    <div class="art">
+      <div class="art-img" style="background:linear-gradient(145deg,#FAE0E0,#F5B0B0);">📰</div>
+      <div class="flex-1"><p class="art-t">BNM Polisi Baru — Takaful Family 2026</p><p class="art-s">15 Mei · 5 min bacaan</p></div>
+    </div>
+    <div class="art">
+      <div class="art-img">⭐</div>
+      <div class="flex-1"><p class="art-t">5 Closing Technique Pakar MDRT</p><p class="art-s">12 Mei · 8 min bacaan</p></div>
+    </div>
+  </div>
+</div>
+<p class="ptag">③ Knowledge Hub</p>
+</div>
+
+<!-- ═══════ PAGE 4: AI PROPOSAL ═══════ -->
+<div>
+<div class="phone">
+  <div class="flex justify-between items-center px-7 pt-3 pb-1 text-xs font-semibold text-ink"><span>9:41</span><div class="flex gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+
+  <div class="pscroll">
+    <div class="phead">
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <p class="ptitle">AI Proposal Generator</p>
+    </div>
+
+    <div class="hero h-ai">
+      <div class="hero-z">
+        <p class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Analisa & Jana Otomatik</p>
+        <p class="text-2xl font-bold text-white mt-2 tracking-tight">AI Needs Analysis</p>
+        <p class="text-[11px] text-white/65 mt-1">3 langkah · Output PDF profesional</p>
+      </div>
+    </div>
+
+    <!-- Steps mini -->
+    <div class="steps-mini">
+      <div class="step-c done">✓</div>
+      <div class="step-l done"></div>
+      <div class="step-c done">✓</div>
+      <div class="step-l done"></div>
+      <div class="step-c act">3</div>
+    </div>
+
+    <p class="sect-eye" style="color:#6D28D9;">LANGKAH 3 / 3</p>
+    <p class="sect-t">Cadangan AI</p>
+
+    <div class="aisug">
+      <p class="aisug-t">PRUFlexi Strike — Medical Card</p>
+      <p class="aisug-s">Berdasarkan profil Maryam (37 tahun, 2 anak, kerja swasta), AI mencadang medical card RM 200k coverage dengan rider critical illness.</p>
+      <span class="aisug-pr">RM 280/bulan</span>
+    </div>
+
+    <div class="aisug">
+      <p class="aisug-t">AIA Premier Builder — Life + Investment</p>
+      <p class="aisug-s">Untuk savings retire pada 55 tahun, allocate RM 350/bulan ke ILP balanced fund. Anggaran nilai RM 280k pada usia 55.</p>
+      <span class="aisug-pr">RM 350/bulan</span>
+    </div>
+
+    <div class="aisug">
+      <p class="aisug-t">Takaful Family — Hospital Income</p>
+      <p class="aisug-s">Backup income RM 200/hari masa tinggal di hospital. Sesuai untuk gaji bulanan stuck bila kena warded.</p>
+      <span class="aisug-pr">RM 80/bulan</span>
+    </div>
+
+    <div style="margin:14px 20px 0;display:flex;gap:8px;">
+      <div style="flex:1;background:linear-gradient(145deg,#3B0764,#6D28D9,#8B5CF6);color:white;text-align:center;padding:13px;border-radius:14px;font-size:13px;font-weight:700;box-shadow:0 6px 18px rgba(109,40,217,0.4);">📄 Generate PDF</div>
+      <div style="background:white;border:1.5px solid #E4E4EC;color:#1A1A1F;padding:13px;border-radius:14px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/></svg></div>
+    </div>
+    <div style="height:30px;"></div>
+  </div>
+</div>
+<p class="ptag">④ AI Proposal Generator</p>
+</div>
+
+<!-- ═══════ PAGE 5: PROFIL DIGITAL ═══════ -->
+<div>
+<div class="phone">
+  <div class="flex justify-between items-center px-7 pt-3 pb-1 text-xs font-semibold text-ink"><span>9:41</span><div class="flex gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+
+  <div class="pscroll">
+    <div class="phead">
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <p class="ptitle">Profil Digital</p>
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+    </div>
+
+    <p class="sect-eye">PREVIEW MINI WEBSITE</p>
+    <p class="sect-t">agentivo.my/ahmad-faris</p>
+
+    <div class="pweb">
+      <div class="pweb-cover">
+        <div class="pweb-av">A</div>
+      </div>
+      <div class="pweb-b">
+        <p class="pweb-name">Ahmad Faris Bin Hassan</p>
+        <p class="pweb-lic">Lesen BNM · LIAM-2019-0445</p>
+        <p class="pweb-bio">Specialized in family protection plans & medical card. Trusted by 250+ family across Klang Valley. Free consultation tersedia 24/7.</p>
+        <div class="pweb-stats">
+          <div class="pweb-stat"><p class="pweb-sv">8+</p><p class="pweb-sl">Tahun</p></div>
+          <div class="pweb-stat"><p class="pweb-sv">250+</p><p class="pweb-sl">Pelanggan</p></div>
+          <div class="pweb-stat"><p class="pweb-sv">4.9★</p><p class="pweb-sl">Rating</p></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="sect-eye">SHARE</p>
+    <p class="sect-t">QR Code & Link</p>
+
+    <div class="qrrow">
+      <div class="qr-img">
+        <div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div>
+        <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell w"></div><div class="qr-cell w"></div><div class="qr-cell w"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
+        <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
+        <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
+        <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
+        <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell w"></div><div class="qr-cell w"></div><div class="qr-cell w"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
+        <div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="qr-t">Scan untuk profile</p>
+        <p class="qr-l">agentivo.my/ahmad-faris</p>
+      </div>
+      <div style="background:#1A1A1F;color:white;padding:8px;border-radius:10px;"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/></svg></div>
+    </div>
+
+    <div style="margin:0 20px 8px;background:#FDF5F5;border:1px solid #FAE0E0;border-radius:14px;padding:13px;display:flex;align-items:center;gap:11px;">
+      <span style="font-size:24px;">👁</span>
+      <div class="flex-1">
+        <p class="text-[13px] font-bold text-ink">142 lawatan minggu ini</p>
+        <p class="text-[11px] text-inkm mt-0.5">+12 lead capture · 8 WhatsApp DM</p>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="ptag">⑤ Profil Digital</p>
+</div>
+
+<!-- ═══════ PAGE 6: REFERRAL ENGINE ═══════ -->
+<div>
+<div class="phone">
+  <div class="flex justify-between items-center px-7 pt-3 pb-1 text-xs font-semibold text-ink"><span>9:41</span><div class="flex gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+
+  <div class="pscroll">
+    <div class="phead">
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <p class="ptitle">Referral Engine</p>
+      <div class="pback"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#1A1A1F" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg></div>
+    </div>
+
+    <div class="hero h-ref">
+      <div class="hero-z">
+        <p class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Lead Generation</p>
+        <p class="text-2xl font-bold text-white mt-2 tracking-tight">Bina Network</p>
+        <p class="text-[11px] text-white/65 mt-1">Pelanggan refer rakan → auto-track lead masuk</p>
+      </div>
+    </div>
+
+    <div class="ref-stats">
+      <div class="ref-s"><p class="ref-sv" style="color:#EA580C;">38</p><p class="ref-sl">Total Klik</p></div>
+      <div class="ref-s"><p class="ref-sv" style="color:#C8102E;">12</p><p class="ref-sl">Lead Masuk</p></div>
+    </div>
+    <div class="ref-stats">
+      <div class="ref-s"><p class="ref-sv" style="color:#0F52BA;">6</p><p class="ref-sl">Polisi Tutup</p></div>
+      <div class="ref-s"><p class="ref-sv" style="color:#059669;">RM 8.4k</p><p class="ref-sl">Komisyen</p></div>
+    </div>
+
+    <div class="reflink">
+      <p class="reflink-l">Link Referral Anda</p>
+      <div class="reflink-u">
+        <svg class="w-4 h-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span class="truncate">agentivo.my/r/AHMAD2026</span>
+        <div class="reflink-btn">📋 Copy</div>
+      </div>
+    </div>
+
+    <p class="sect-eye text-ruby-500">TOP REFERRERS</p>
+    <p class="sect-t">Pelanggan Setia</p>
+
+    <div class="refr">
+      <div class="refr-av">N</div>
+      <div class="flex-1"><p class="refr-n">Nurul Aini</p><p class="refr-s">4 referrals · RM 1,920 komisyen</p></div>
+      <span class="refr-c">🏆 Top</span>
+    </div>
+    <div class="refr">
+      <div class="refr-av" style="background:linear-gradient(145deg,#0F52BA,#5E96E8);">L</div>
+      <div class="flex-1"><p class="refr-n">Lim Wei Chen</p><p class="refr-s">3 referrals · RM 1,440 komisyen</p></div>
+      <span class="refr-c">⭐ Aktif</span>
+    </div>
+    <div class="refr">
+      <div class="refr-av" style="background:linear-gradient(145deg,#059669,#10B981);">T</div>
+      <div class="flex-1"><p class="refr-n">Tan Mei Ling</p><p class="refr-s">2 referrals · RM 960 komisyen</p></div>
+      <span class="refr-c">⭐ Aktif</span>
+    </div>
+  </div>
+</div>
+<p class="ptag">⑥ Referral Engine</p>
+</div>
+
+</div>
+<div class="text-center mt-8 mb-4"><a href="index.html" class="text-xs text-white/40 tracking-widest uppercase">← Kembali ke Senarai Mockups</a></div>
+</body>
+</html>
