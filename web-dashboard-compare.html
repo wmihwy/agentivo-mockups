@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Dashboard — 3 Options Compare</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+body{font-family:'DM Sans',sans-serif;background:#0D1117;color:white;min-height:100vh;}
+.serif{font-family:'Cormorant Garamond',serif;}
+.card{background:linear-gradient(145deg,#1A1A1F 0%,#222228 100%);border:1px solid rgba(255,255,255,0.06);border-radius:24px;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.5);border-color:rgba(200,16,46,0.3);}
+.preview{position:relative;height:240px;overflow:hidden;background:#F8F7F4;}
+.preview iframe{position:absolute;top:0;left:0;width:1600px;height:1000px;border:0;transform:scale(0.32);transform-origin:0 0;pointer-events:none;}
+.tag{display:inline-block;font-size:10px;font-weight:600;padding:3px 9px;border-radius:6px;text-transform:uppercase;letter-spacing:1px;}
+</style>
+</head>
+<body class="px-6 py-12 md:py-16">
+
+<div class="max-w-7xl mx-auto">
+
+  <div class="text-center mb-12">
+    <div class="text-[11px] font-bold text-red-400 tracking-[3px] uppercase mb-3">Web Dashboard Redesign</div>
+    <h1 class="serif font-bold text-5xl md:text-6xl tracking-tight">3 Options · Pilih Satu</h1>
+    <p class="text-white/55 mt-4 max-w-2xl mx-auto">Setiap option apply design language sama macam mobile app (ruby/sapphire/black, Cormorant Garamond, lucide icons, no gamification clutter).</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+
+    <!-- Option A -->
+    <a href="web-dashboard-option-a.html" class="card cursor-pointer block">
+      <div class="preview"><iframe src="web-dashboard-option-a.html"></iframe></div>
+      <div class="p-6">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="tag" style="background:rgba(200,16,46,0.15);color:#FAE0E0;">Option A</span>
+          <span class="tag" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);">Mobile-feel</span>
+        </div>
+        <h3 class="serif font-bold text-3xl">Hero Premium</h3>
+        <p class="text-white/55 text-sm mt-2">Ruby gradient hero besar dengan komisyen 88px. Dark MDRT card. 2-col widget. Sangat mirror mobile dashboard.</p>
+        <div class="mt-5 pt-5 border-t border-white/10 space-y-1.5 text-[12px] text-white/65">
+          <div class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>Familiar untuk user mobile</div>
+          <div class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>Visual impact tinggi</div>
+          <div class="flex items-center gap-2"><i data-lucide="x" class="w-3.5 h-3.5 text-amber-400"></i>Kurang dense — perlu scroll</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Option B -->
+    <a href="web-dashboard-option-b.html" class="card cursor-pointer block">
+      <div class="preview"><iframe src="web-dashboard-option-b.html"></iframe></div>
+      <div class="p-6">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="tag" style="background:rgba(15,82,186,0.2);color:#A8C8F5;">Option B</span>
+          <span class="tag" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);">Data-dense</span>
+        </div>
+        <h3 class="serif font-bold text-3xl">Pro Workspace</h3>
+        <p class="text-white/55 text-sm mt-2">4 KPI compact + chart trend + MDRT gauge bulat + 3-col lists (Follow-up · Renewal · Team activity). Optimized untuk power user.</p>
+        <div class="mt-5 pt-5 border-t border-white/10 space-y-1.5 text-[12px] text-white/65">
+          <div class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>Banyak info dalam 1 viewport</div>
+          <div class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>Productivity-focused</div>
+          <div class="flex items-center gap-2"><i data-lucide="x" class="w-3.5 h-3.5 text-amber-400"></i>Lebih "biasa" — kurang premium</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Option C -->
+    <a href="web-dashboard-option-c.html" class="card cursor-pointer block">
+      <div class="preview"><iframe src="web-dashboard-option-c.html"></iframe></div>
+      <div class="p-6">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="tag" style="background:rgba(212,175,55,0.2);color:#FDD96A;">Option C</span>
+          <span class="tag" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);">Editorial</span>
+        </div>
+        <h3 class="serif font-bold text-3xl">Magazine Style</h3>
+        <p class="text-white/55 text-sm mt-2">Sidebar 72px icon-only. Komisyen 128px headline. Sections §01 §02 §03 macam majalah. Sangat unique dan premium feel.</p>
+        <div class="mt-5 pt-5 border-t border-white/10 space-y-1.5 text-[12px] text-white/65">
+          <div class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>Brand differentiator — tak macam SaaS biasa</div>
+          <div class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>Whitespace banyak — premium</div>
+          <div class="flex items-center gap-2"><i data-lucide="x" class="w-3.5 h-3.5 text-amber-400"></i>Ambil ruang scroll lebih</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Comparison table -->
+  <div class="mt-16 card p-8">
+    <h2 class="serif font-bold text-3xl mb-6">Comparison</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-white/10">
+            <th class="text-left py-3 pr-4 text-white/50 font-semibold text-[11px] uppercase tracking-wider">Feature</th>
+            <th class="text-center py-3 px-4 text-red-300 font-bold">Option A · Hero</th>
+            <th class="text-center py-3 px-4 text-sapphire-300 font-bold" style="color:#A8C8F5;">Option B · Pro</th>
+            <th class="text-center py-3 px-4 font-bold" style="color:#FDD96A;">Option C · Editorial</th>
+          </tr>
+        </thead>
+        <tbody class="text-white/75">
+          <tr class="border-b border-white/5"><td class="py-3 pr-4 font-semibold">Sidebar style</td><td class="text-center">230px labeled</td><td class="text-center">210px labeled</td><td class="text-center">72px icon-only</td></tr>
+          <tr class="border-b border-white/5"><td class="py-3 pr-4 font-semibold">Hero stat</td><td class="text-center">Ruby gradient 88px</td><td class="text-center">4 compact KPI cards</td><td class="text-center">Headline 128px</td></tr>
+          <tr class="border-b border-white/5"><td class="py-3 pr-4 font-semibold">MDRT</td><td class="text-center">Dark card row</td><td class="text-center">Circular gauge</td><td class="text-center">Inline badge</td></tr>
+          <tr class="border-b border-white/5"><td class="py-3 pr-4 font-semibold">Follow-up + Renewal</td><td class="text-center">2-col gradient cards</td><td class="text-center">3-col list (+ Activity)</td><td class="text-center">2-col gradient editorial</td></tr>
+          <tr class="border-b border-white/5"><td class="py-3 pr-4 font-semibold">Chart trend</td><td class="text-center">Tiada (di /komisyen)</td><td class="text-center">✓ Inline bar chart</td><td class="text-center">Tiada (di /komisyen)</td></tr>
+          <tr class="border-b border-white/5"><td class="py-3 pr-4 font-semibold">Density</td><td class="text-center">Sederhana</td><td class="text-center">Tinggi</td><td class="text-center">Rendah (whitespace)</td></tr>
+          <tr class="border-b border-white/5"><td class="py-3 pr-4 font-semibold">Mobile consistency</td><td class="text-center text-emerald-400 font-bold">★★★★★</td><td class="text-center">★★★☆☆</td><td class="text-center">★★★★☆</td></tr>
+          <tr class="border-b border-white/5"><td class="py-3 pr-4 font-semibold">Productivity</td><td class="text-center">★★★☆☆</td><td class="text-center text-emerald-400 font-bold">★★★★★</td><td class="text-center">★★★☆☆</td></tr>
+          <tr><td class="py-3 pr-4 font-semibold">Premium feel</td><td class="text-center">★★★★☆</td><td class="text-center">★★★☆☆</td><td class="text-center text-emerald-400 font-bold">★★★★★</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="text-center mt-12">
+    <a href="index.html" class="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i>Kembali ke semua mockups</a>
+  </div>
+
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

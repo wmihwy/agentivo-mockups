@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Dashboard — Option A · Hero Premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['DM Sans', 'system-ui'], serif: ['Cormorant Garamond', 'serif'], mono: ['DM Mono', 'monospace'] },
+  colors: {
+    ruby:{ 50:'#FDF5F5', 100:'#FAE0E0', 200:'#F5B0B0', 300:'#E87070', 400:'#D94040', 500:'#C8102E', 600:'#B22222', 700:'#8B1E1E', 800:'#5C1414', 900:'#2D0A0A' },
+    sapphire:{ 50:'#F0F6FF', 100:'#D6E8FC', 300:'#5E96E8', 500:'#0F52BA', 600:'#1C3F7A', 700:'#152E5C', 800:'#0D1E3D' },
+    ink:'#1A1A1F', inkSoft:'#3D3D45', inkMuted:'#7A7A8A', border:'#E4E4EC', offwhite:'#F8F7F4', cream:'#FDFCF9'
+  }
+}}}
+</script>
+<style>
+body{font-family:'DM Sans',sans-serif;background:#F8F7F4;color:#1A1A1F;}
+.serif{font-family:'Cormorant Garamond',serif;}
+.mono{font-family:'DM Mono',monospace;}
+.gradient-ruby{background:linear-gradient(135deg,#8B1E1E 0%,#C8102E 50%,#D94040 100%);}
+.gradient-ruby-dark{background:linear-gradient(135deg,#5C1414 0%,#8B1E1E 50%,#B22222 100%);}
+.gradient-dark{background:linear-gradient(135deg,#0C0C0E 0%,#1A1A1F 50%,#2D2D33 100%);}
+.gradient-amber{background:linear-gradient(135deg,#92400E 0%,#D97706 50%,#F59E0B 100%);}
+.gradient-sapphire{background:linear-gradient(135deg,#0D1E3D 0%,#1C3F7A 50%,#0F52BA 100%);}
+.shadow-ruby{box-shadow:0 12px 40px rgba(200,16,46,0.28);}
+.shadow-amber{box-shadow:0 12px 40px rgba(217,119,6,0.25);}
+.shadow-dark{box-shadow:0 12px 40px rgba(12,12,14,0.4);}
+.dot-grid{background-image:radial-gradient(circle,rgba(255,255,255,0.10) 1px,transparent 1px);background-size:18px 18px;}
+.glow-orb{position:absolute;border-radius:50%;filter:blur(40px);pointer-events:none;}
+.sidebar-item{display:flex;align-items:center;gap:12px;padding:9px 14px;border-radius:10px;color:#7A7A8A;font-size:13px;font-weight:500;transition:background 0.15s,color 0.15s;cursor:pointer;}
+.sidebar-item:hover{background:#F0EFEB;color:#1A1A1F;}
+.sidebar-item.active{background:#FDF5F5;color:#C8102E;font-weight:600;}
+.sidebar-item.active svg{color:#C8102E;}
+.sidebar-section{font-size:10px;font-weight:700;color:#7A7A8A;letter-spacing:1.5px;text-transform:uppercase;padding:14px 14px 6px;}
+.fab{position:fixed;bottom:32px;right:32px;width:56px;height:56px;border-radius:28px;background:linear-gradient(135deg,#8B1E1E,#C8102E);box-shadow:0 12px 32px rgba(200,16,46,0.4);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.2s;z-index:50;}
+.fab:hover{transform:scale(1.08);}
+</style>
+</head>
+<body>
+
+<div class="flex min-h-screen">
+
+  <!-- ── SIDEBAR (collapsed-friendly, simplified) ── -->
+  <aside class="w-[230px] bg-white border-r border-border h-screen sticky top-0 flex flex-col">
+    <div class="px-5 py-5 border-b border-border flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-ruby-700 to-ruby-500 flex items-center justify-center">
+        <span class="serif font-bold text-white text-lg">A</span>
+      </div>
+      <div>
+        <div class="serif font-bold text-[17px] tracking-tight leading-none">Agentivo<span class="text-black">.MY</span></div>
+        <div class="text-[9px] text-inkMuted tracking-wider uppercase mt-0.5">Insurance OS</div>
+      </div>
+    </div>
+
+    <nav class="flex-1 overflow-y-auto py-2 px-2">
+      <div class="sidebar-section">Utama</div>
+      <a class="sidebar-item active"><i data-lucide="home" class="w-[18px] h-[18px]"></i>Dashboard</a>
+      <a class="sidebar-item"><i data-lucide="users" class="w-[18px] h-[18px]"></i>Leads</a>
+      <a class="sidebar-item"><i data-lucide="bell" class="w-[18px] h-[18px]"></i>Renewal</a>
+      <a class="sidebar-item"><i data-lucide="trending-up" class="w-[18px] h-[18px]"></i>Komisyen</a>
+      <a class="sidebar-item"><i data-lucide="award" class="w-[18px] h-[18px]"></i>MDRT</a>
+
+      <div class="sidebar-section">Tools</div>
+      <a class="sidebar-item"><i data-lucide="sparkles" class="w-[18px] h-[18px]"></i>AI Proposal</a>
+      <a class="sidebar-item"><i data-lucide="message-circle" class="w-[18px] h-[18px]"></i>WhatsApp</a>
+      <a class="sidebar-item"><i data-lucide="image" class="w-[18px] h-[18px]"></i>Content</a>
+      <a class="sidebar-item"><i data-lucide="share-2" class="w-[18px] h-[18px]"></i>Referral</a>
+      <a class="sidebar-item"><i data-lucide="book-open" class="w-[18px] h-[18px]"></i>Knowledge</a>
+
+      <div class="sidebar-section">Kumpulan · Team</div>
+      <a class="sidebar-item"><i data-lucide="layout-grid" class="w-[18px] h-[18px]"></i>Dashboard Team</a>
+      <a class="sidebar-item"><i data-lucide="trophy" class="w-[18px] h-[18px]"></i>Leaderboard</a>
+      <a class="sidebar-item"><i data-lucide="radio" class="w-[18px] h-[18px]"></i>Broadcast</a>
+      <a class="sidebar-item"><i data-lucide="file-text" class="w-[18px] h-[18px]"></i>Reports</a>
+    </nav>
+
+    <div class="border-t border-border p-3">
+      <div class="flex items-center gap-2.5 px-2 py-2">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-ruby-700 to-ruby-500 flex items-center justify-center text-white text-xs font-bold">T</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-bold truncate">Team Demo Agentivo</div>
+          <div class="text-[10px] text-inkMuted">Team Plan</div>
+        </div>
+        <i data-lucide="settings" class="w-4 h-4 text-inkMuted"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="flex-1 px-10 py-8">
+
+    <!-- Top bar (greeting + actions) -->
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <div class="text-[11px] font-bold text-ruby-500 tracking-[2px] uppercase">Selamat Petang</div>
+        <h1 class="serif font-bold text-[42px] leading-[1.1] tracking-tight mt-1">Team Demo Agentivo</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="w-10 h-10 rounded-full bg-white border border-border flex items-center justify-center"><i data-lucide="search" class="w-4 h-4 text-ink"></i></button>
+        <button class="w-10 h-10 rounded-full bg-white border border-border flex items-center justify-center relative">
+          <i data-lucide="bell" class="w-4 h-4 text-ink"></i>
+          <div class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-ruby-500"></div>
+        </button>
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-ruby-700 to-ruby-500 flex items-center justify-center text-white text-sm font-bold">T</div>
+      </div>
+    </div>
+
+    <!-- ① HERO CARD — ruby gradient, big komisyen (macam mobile) -->
+    <div class="gradient-ruby shadow-ruby rounded-3xl p-8 relative overflow-hidden mb-6">
+      <div class="dot-grid absolute inset-0 opacity-30"></div>
+      <div class="glow-orb" style="width:380px;height:380px;background:rgba(255,180,180,0.15);top:-150px;right:-100px;"></div>
+      <div class="glow-orb" style="width:200px;height:200px;background:rgba(80,0,10,0.6);bottom:-80px;left:-50px;"></div>
+
+      <div class="relative grid grid-cols-3 gap-8">
+        <!-- Komisyen (main metric) -->
+        <div class="col-span-2">
+          <div class="text-[10px] font-bold text-white/60 tracking-[2px] uppercase">Komisyen Bulan Ini · Mei 2026</div>
+          <div class="serif font-bold text-white text-[88px] leading-[0.95] tracking-tight mt-2">RM 11,064</div>
+          <div class="flex items-center gap-4 mt-3">
+            <div class="text-[12px] text-white/70">ANP · RM 31,500</div>
+            <div class="w-1 h-1 rounded-full bg-white/40"></div>
+            <div class="flex items-center gap-1.5 text-[12px] text-emerald-300"><i data-lucide="trending-up" class="w-3.5 h-3.5"></i>+24% vs April</div>
+          </div>
+        </div>
+
+        <!-- MDRT badge -->
+        <div class="bg-white/12 backdrop-blur rounded-2xl p-5 border border-white/10 self-center">
+          <div class="text-[9px] font-bold text-white/55 tracking-[1.5px] uppercase">MDRT Progress</div>
+          <div class="flex items-baseline gap-1 mt-1.5">
+            <div class="serif font-bold text-white text-[44px] leading-none">68</div>
+            <div class="text-white/70 text-lg font-bold">%</div>
+          </div>
+          <div class="h-1.5 bg-white/15 rounded-full mt-3 overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-amber-300 to-amber-500 rounded-full" style="width:68%;"></div>
+          </div>
+          <div class="text-[10px] text-white/55 mt-2">Baki ANP: RM 152k</div>
+        </div>
+      </div>
+
+      <!-- Quick stat strip -->
+      <div class="relative grid grid-cols-4 gap-2 mt-6 pt-6 border-t border-white/10">
+        <div>
+          <div class="text-[9px] font-bold text-white/50 uppercase tracking-wider">Polisi Aktif</div>
+          <div class="serif font-bold text-white text-2xl mt-0.5">7</div>
+        </div>
+        <div>
+          <div class="text-[9px] font-bold text-white/50 uppercase tracking-wider">Leads Aktif</div>
+          <div class="serif font-bold text-white text-2xl mt-0.5">13</div>
+        </div>
+        <div>
+          <div class="text-[9px] font-bold text-white/50 uppercase tracking-wider">Renewal 7H</div>
+          <div class="serif font-bold text-white text-2xl mt-0.5">2</div>
+        </div>
+        <div>
+          <div class="text-[9px] font-bold text-white/50 uppercase tracking-wider">Follow Up</div>
+          <div class="serif font-bold text-white text-2xl mt-0.5">5</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② MDRT row (dark with gold) -->
+    <div class="gradient-dark shadow-dark rounded-2xl p-6 mb-6 relative overflow-hidden flex items-center gap-6">
+      <div class="dot-grid absolute inset-0 opacity-30"></div>
+      <div class="glow-orb" style="width:200px;height:200px;background:rgba(212,175,55,0.14);top:-80px;right:-40px;"></div>
+      <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center" style="background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.25);box-shadow:0 0 30px rgba(212,175,55,0.15);">
+        <i data-lucide="award" class="w-6 h-6" style="color:#D4AF37;"></i>
+      </div>
+      <div class="flex-1 relative">
+        <div class="text-[10px] font-bold tracking-[2px] uppercase" style="color:#D4AF37;">Simulator · 2026</div>
+        <div class="serif font-bold text-white text-2xl mt-1">MDRT / COT / TOT Tracker</div>
+        <div class="text-white/45 text-xs mt-1">Kira baki ANP, target bulanan, simulator naik pangkat.</div>
+      </div>
+      <button class="relative px-5 py-2.5 rounded-xl text-white text-sm font-bold flex items-center gap-2" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1);">
+        Buka Simulator <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- ③ Follow-up + Renewal (2-col, sama tinggi macam mobile) -->
+    <div class="grid grid-cols-2 gap-6 mb-6">
+
+      <!-- Follow-up -->
+      <div class="gradient-ruby-dark shadow-ruby rounded-2xl p-6 relative overflow-hidden">
+        <div class="dot-grid absolute inset-0 opacity-20"></div>
+        <div class="relative flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center"><i data-lucide="phone" class="w-4 h-4 text-white"></i></div>
+          <div class="text-white/85 font-semibold text-sm flex-1">Follow Up Hari Ini</div>
+          <a class="text-white/70 text-xs font-bold flex items-center gap-1 hover:text-white">Semua <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
+        <div class="relative">
+          <div class="serif font-bold text-white text-[88px] leading-[0.85] tracking-tight">5</div>
+          <div class="text-white/55 text-xs mt-1">Prospek perlu dihubungi</div>
+        </div>
+        <div class="relative mt-5 space-y-1.5">
+          <div class="text-white text-[13px] font-semibold">Karim Abdullah</div>
+          <div class="text-white text-[13px] font-semibold">Siti Rahayu</div>
+          <div class="text-white text-[13px] font-semibold">Azlan Ibrahim</div>
+        </div>
+      </div>
+
+      <!-- Renewal -->
+      <div class="gradient-amber shadow-amber rounded-2xl p-6 relative overflow-hidden">
+        <div class="glow-orb" style="width:140px;height:140px;background:rgba(255,220,100,0.25);bottom:-40px;left:-30px;"></div>
+        <div class="relative flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center"><i data-lucide="refresh-cw" class="w-4 h-4 text-white"></i></div>
+          <div class="text-white/85 font-semibold text-sm flex-1">Renewal 7 Hari</div>
+          <a class="text-white/70 text-xs font-bold flex items-center gap-1 hover:text-white">Semua <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
+        <div class="relative">
+          <div class="serif font-bold text-white text-[88px] leading-[0.85] tracking-tight">2</div>
+          <div class="text-white/65 text-xs mt-1">Polisi tamat tempoh</div>
+        </div>
+        <div class="relative mt-5 space-y-1.5">
+          <div class="text-white text-[13px] font-semibold">Lama Client · 0 hari</div>
+          <div class="text-white text-[13px] font-semibold">Ahmad Faris Sr · 3 hari</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ④ Team Leader strip (only for Team plan) -->
+    <div class="mb-6">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="flex items-center gap-1.5 px-3 py-1 rounded-md bg-sapphire-800/10 text-sapphire-600">
+          <i data-lucide="shield" class="w-3 h-3" style="stroke-width:2.5;"></i>
+          <span class="text-[10px] font-bold tracking-[1.5px] uppercase">Team Leader</span>
+        </div>
+        <div class="flex-1 h-px bg-border"></div>
+      </div>
+      <div class="grid grid-cols-4 gap-3">
+        <div class="gradient-sapphire rounded-2xl p-5 cursor-pointer relative overflow-hidden">
+          <div class="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center mb-3"><i data-lucide="layout-grid" class="w-4 h-4 text-white"></i></div>
+          <div class="text-white font-bold text-sm">Dashboard Kumpulan</div>
+          <div class="text-white/60 text-[11px] mt-0.5">12 ejen aktif</div>
+        </div>
+        <div class="gradient-sapphire rounded-2xl p-5 cursor-pointer relative overflow-hidden">
+          <div class="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center mb-3"><i data-lucide="radio" class="w-4 h-4 text-white"></i></div>
+          <div class="text-white font-bold text-sm">Broadcast</div>
+          <div class="text-white/60 text-[11px] mt-0.5">Hantar mesej team</div>
+        </div>
+        <div class="gradient-sapphire rounded-2xl p-5 cursor-pointer relative overflow-hidden">
+          <div class="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center mb-3"><i data-lucide="trophy" class="w-4 h-4 text-white"></i></div>
+          <div class="text-white font-bold text-sm">Leaderboard</div>
+          <div class="text-white/60 text-[11px] mt-0.5">Ranking bulanan</div>
+        </div>
+        <div class="gradient-sapphire rounded-2xl p-5 cursor-pointer relative overflow-hidden">
+          <div class="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center mb-3"><i data-lucide="download" class="w-4 h-4 text-white"></i></div>
+          <div class="text-white font-bold text-sm">Laporan</div>
+          <div class="text-white/60 text-[11px] mt-0.5">PDF · Excel</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑤ Semua Tools link (single link, no card grid clutter) -->
+    <a class="flex items-center gap-4 bg-white border border-border rounded-2xl p-5 cursor-pointer hover:border-ruby-200 transition">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:#6D28D9;">
+        <i data-lucide="layout-grid" class="w-5 h-5 text-white"></i>
+      </div>
+      <div class="flex-1">
+        <div class="font-bold text-ink text-base">Semua Tools</div>
+        <div class="text-inkMuted text-xs mt-0.5">AI Proposal · WhatsApp Templates · Content Creator · Knowledge Hub · Referral</div>
+      </div>
+      <i data-lucide="chevron-right" class="w-5 h-5 text-inkMuted"></i>
+    </a>
+
+  </main>
+
+</div>
+
+<!-- Floating Action Button -->
+<button class="fab"><i data-lucide="plus" class="w-6 h-6 text-white"></i></button>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

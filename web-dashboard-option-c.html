@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Dashboard — Option C · Editorial Magazine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['DM Sans', 'system-ui'], serif: ['Cormorant Garamond', 'serif'], mono: ['DM Mono', 'monospace'] },
+  colors: {
+    ruby:{ 50:'#FDF5F5', 100:'#FAE0E0', 500:'#C8102E', 600:'#B22222', 700:'#8B1E1E', 800:'#5C1414' },
+    sapphire:{ 50:'#F0F6FF', 100:'#D6E8FC', 500:'#0F52BA', 600:'#1C3F7A', 700:'#152E5C', 800:'#0D1E3D' },
+    ink:'#1A1A1F', inkSoft:'#3D3D45', inkMuted:'#7A7A8A', border:'#E4E4EC', offwhite:'#F8F7F4', cream:'#FDFCF9'
+  }
+}}}
+</script>
+<style>
+body{font-family:'DM Sans',sans-serif;background:#FDFCF9;color:#1A1A1F;}
+.serif{font-family:'Cormorant Garamond',serif;}
+.mono{font-family:'DM Mono',monospace;}
+.gradient-ruby{background:linear-gradient(135deg,#8B1E1E 0%,#C8102E 100%);}
+.gradient-dark{background:linear-gradient(135deg,#0C0C0E 0%,#2D2D33 100%);}
+.gradient-cream{background:linear-gradient(135deg,#FAF6E8 0%,#F0E8C8 100%);}
+.dot-grid{background-image:radial-gradient(circle,rgba(255,255,255,0.12) 1px,transparent 1px);background-size:20px 20px;}
+.sidebar-icon-only{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#7A7A8A;cursor:pointer;transition:all 0.15s;position:relative;}
+.sidebar-icon-only:hover{background:#F0EFEB;color:#1A1A1F;}
+.sidebar-icon-only.active{background:#1A1A1F;color:white;}
+.sidebar-icon-only .tooltip{position:absolute;left:60px;background:#1A1A1F;color:white;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:600;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;z-index:100;}
+.sidebar-icon-only:hover .tooltip{opacity:1;}
+.editorial-rule{height:1px;background:linear-gradient(90deg,transparent,#1A1A1F 50%,transparent);}
+</style>
+</head>
+<body>
+
+<div class="flex min-h-screen">
+
+  <!-- ── ICON-ONLY SIDEBAR (collapsed default, expand on hover) ── -->
+  <aside class="w-[72px] bg-white border-r border-border h-screen sticky top-0 flex flex-col items-center py-4 gap-1.5">
+    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-ruby-700 to-ruby-500 flex items-center justify-center mb-3">
+      <span class="serif font-bold text-white text-xl">A</span>
+    </div>
+    <div class="sidebar-icon-only active"><i data-lucide="home" class="w-5 h-5"></i><span class="tooltip">Dashboard</span></div>
+    <div class="sidebar-icon-only"><i data-lucide="users" class="w-5 h-5"></i><span class="tooltip">Leads</span></div>
+    <div class="sidebar-icon-only"><i data-lucide="bell" class="w-5 h-5"></i><span class="tooltip">Renewal</span></div>
+    <div class="sidebar-icon-only"><i data-lucide="trending-up" class="w-5 h-5"></i><span class="tooltip">Komisyen</span></div>
+    <div class="sidebar-icon-only"><i data-lucide="award" class="w-5 h-5"></i><span class="tooltip">MDRT</span></div>
+    <div class="w-8 h-px bg-border my-2"></div>
+    <div class="sidebar-icon-only"><i data-lucide="sparkles" class="w-5 h-5"></i><span class="tooltip">AI Proposal</span></div>
+    <div class="sidebar-icon-only"><i data-lucide="message-circle" class="w-5 h-5"></i><span class="tooltip">WhatsApp</span></div>
+    <div class="sidebar-icon-only"><i data-lucide="image" class="w-5 h-5"></i><span class="tooltip">Content</span></div>
+    <div class="sidebar-icon-only"><i data-lucide="book-open" class="w-5 h-5"></i><span class="tooltip">Knowledge</span></div>
+    <div class="w-8 h-px bg-border my-2"></div>
+    <div class="sidebar-icon-only"><i data-lucide="layout-grid" class="w-5 h-5"></i><span class="tooltip">Team</span></div>
+    <div class="sidebar-icon-only"><i data-lucide="trophy" class="w-5 h-5"></i><span class="tooltip">Leaderboard</span></div>
+
+    <div class="flex-1"></div>
+
+    <div class="sidebar-icon-only"><i data-lucide="settings" class="w-5 h-5"></i><span class="tooltip">Settings</span></div>
+    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-ruby-700 to-ruby-500 flex items-center justify-center text-white text-sm font-bold cursor-pointer">T</div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="flex-1 px-16 py-10 max-w-[1280px] mx-auto">
+
+    <!-- Editorial header -->
+    <div class="flex items-center justify-between mb-3">
+      <div class="text-[10px] font-bold text-inkMuted tracking-[3px] uppercase">Volume I · Edition 12 · Mei 2026</div>
+      <div class="flex items-center gap-4 text-[11px] text-inkMuted">
+        <span>Rabu, 12 Mei</span>
+        <span>·</span>
+        <span class="font-bold text-ruby-500">Live</span>
+      </div>
+    </div>
+    <div class="editorial-rule mb-8"></div>
+
+    <!-- Hero headline -->
+    <div class="mb-12">
+      <div class="text-[11px] font-bold text-ruby-500 tracking-[2.5px] uppercase mb-3">Komisyen Bulan Ini</div>
+      <div class="flex items-end gap-6">
+        <h1 class="serif font-bold text-[128px] leading-[0.9] tracking-tight">RM 11,064</h1>
+        <div class="pb-6 space-y-1">
+          <div class="flex items-center gap-2 text-emerald-600 font-bold text-sm"><i data-lucide="trending-up" class="w-4 h-4"></i>+24.3% vs April</div>
+          <div class="text-inkMuted text-sm">ANP RM 31,500 · 7 polisi aktif</div>
+        </div>
+      </div>
+      <div class="grid grid-cols-12 gap-6 mt-8">
+        <div class="col-span-8 text-inkSoft text-[15px] leading-relaxed serif italic">
+          "Tahniah, anda mengatasi 68% target MDRT bulan ini. Kekalkan momentum dengan 2 renewal kritikal dan 5 follow-up hari ini."
+        </div>
+        <div class="col-span-4 gradient-cream rounded-xl p-4 flex items-center gap-3">
+          <i data-lucide="award" class="w-7 h-7 flex-shrink-0" style="color:#8B6F1F;"></i>
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-amber-800">MDRT Progress</div>
+            <div class="flex items-baseline gap-1.5"><span class="serif font-bold text-2xl text-amber-900">68%</span><span class="text-[10px] text-amber-700">· Baki RM 152k</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="editorial-rule mb-12"></div>
+
+    <!-- Section 1: Sebut Harga Anda (KPI breakdown in editorial layout) -->
+    <section class="mb-14">
+      <div class="grid grid-cols-12 gap-6 mb-6">
+        <div class="col-span-3">
+          <div class="text-[10px] font-bold text-ruby-500 tracking-[2.5px] uppercase mb-1">§ 01</div>
+          <h2 class="serif font-bold text-3xl leading-tight">Prestasi<br>Hari Ini</h2>
+          <div class="text-inkMuted text-[12px] mt-3">Snapshot real-time aktiviti dan pencapaian anda.</div>
+        </div>
+        <div class="col-span-9 grid grid-cols-4 gap-5">
+          <div class="border-l-2 border-ruby-500 pl-4 py-1">
+            <div class="text-[9px] font-bold uppercase tracking-[1.5px] text-inkMuted">Polisi Aktif</div>
+            <div class="serif font-bold text-4xl mt-1">7</div>
+            <div class="text-[11px] text-emerald-600 font-semibold mt-1">+2 bulan ini</div>
+          </div>
+          <div class="border-l-2 border-sapphire-500 pl-4 py-1">
+            <div class="text-[9px] font-bold uppercase tracking-[1.5px] text-inkMuted">Leads Aktif</div>
+            <div class="serif font-bold text-4xl mt-1">13</div>
+            <div class="text-[11px] text-inkMuted mt-1">5 follow-up</div>
+          </div>
+          <div class="border-l-2 border-amber-500 pl-4 py-1">
+            <div class="text-[9px] font-bold uppercase tracking-[1.5px] text-inkMuted">Renewal 7H</div>
+            <div class="serif font-bold text-4xl mt-1">2</div>
+            <div class="text-[11px] text-ruby-600 font-semibold mt-1">Kritikal</div>
+          </div>
+          <div class="border-l-2 border-emerald-500 pl-4 py-1">
+            <div class="text-[9px] font-bold uppercase tracking-[1.5px] text-inkMuted">Kadar Tutup</div>
+            <div class="serif font-bold text-4xl mt-1">42%</div>
+            <div class="text-[11px] text-emerald-600 font-semibold mt-1">Atas purata</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="editorial-rule mb-14"></div>
+
+    <!-- Section 2: Action items -->
+    <section class="mb-14">
+      <div class="grid grid-cols-12 gap-6">
+        <div class="col-span-3">
+          <div class="text-[10px] font-bold text-ruby-500 tracking-[2.5px] uppercase mb-1">§ 02</div>
+          <h2 class="serif font-bold text-3xl leading-tight">Tindakan<br>Diperlukan</h2>
+          <div class="text-inkMuted text-[12px] mt-3">Prospek dan polisi yang perlu perhatian segera.</div>
+        </div>
+
+        <div class="col-span-9 grid grid-cols-2 gap-5">
+
+          <!-- Follow-up (ruby) -->
+          <div class="gradient-ruby rounded-2xl p-7 text-white relative overflow-hidden" style="box-shadow:0 12px 36px rgba(200,16,46,0.25);">
+            <div class="dot-grid absolute inset-0 opacity-30"></div>
+            <div class="relative flex items-center justify-between mb-5">
+              <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center"><i data-lucide="phone" class="w-4 h-4"></i></div>
+                <div class="font-semibold text-sm">Follow Up Hari Ini</div>
+              </div>
+              <div class="text-[10px] font-bold bg-white/15 px-2 py-1 rounded-md">5 PROSPEK</div>
+            </div>
+            <div class="relative serif font-bold text-[100px] leading-[0.85] tracking-tight">5</div>
+            <div class="relative mt-4 space-y-1.5">
+              <div class="flex justify-between items-center text-[13px]"><span class="font-semibold">Karim Abdullah</span><span class="text-white/55 mono text-[11px]">+60145678901</span></div>
+              <div class="flex justify-between items-center text-[13px]"><span class="font-semibold">Siti Rahayu</span><span class="text-white/55 mono text-[11px]">+60167654321</span></div>
+              <div class="flex justify-between items-center text-[13px]"><span class="font-semibold">Azlan Ibrahim</span><span class="text-white/55 mono text-[11px]">+60153456789</span></div>
+            </div>
+            <a class="relative mt-5 inline-flex items-center gap-1.5 text-[12px] font-bold text-white/80 hover:text-white">Lihat semua 5 prospek <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+          </div>
+
+          <!-- Renewal (dark) -->
+          <div class="gradient-dark rounded-2xl p-7 text-white relative overflow-hidden" style="box-shadow:0 12px 36px rgba(0,0,0,0.25);">
+            <div class="dot-grid absolute inset-0 opacity-40"></div>
+            <div class="relative flex items-center justify-between mb-5">
+              <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.25);"><i data-lucide="refresh-cw" class="w-4 h-4" style="color:#D4AF37;"></i></div>
+                <div class="font-semibold text-sm">Renewal Kritikal</div>
+              </div>
+              <div class="text-[10px] font-bold px-2 py-1 rounded-md" style="background:rgba(212,175,55,0.15);color:#D4AF37;">2 POLISI</div>
+            </div>
+            <div class="relative serif font-bold text-[100px] leading-[0.85] tracking-tight" style="color:#D4AF37;">2</div>
+            <div class="relative mt-4 space-y-2.5">
+              <div>
+                <div class="flex justify-between items-center text-[13px]"><span class="font-semibold">Lama Client</span><span class="text-ruby-300 text-[11px] font-bold">0 HARI LAGI</span></div>
+                <div class="text-white/45 text-[11px]">GE Term Life · RM 3,500</div>
+              </div>
+              <div>
+                <div class="flex justify-between items-center text-[13px]"><span class="font-semibold">Ahmad Faris Sr</span><span class="text-ruby-300 text-[11px] font-bold">3 HARI LAGI</span></div>
+                <div class="text-white/45 text-[11px]">GE MedFlexi · RM 195</div>
+              </div>
+            </div>
+            <a class="relative mt-5 inline-flex items-center gap-1.5 text-[12px] font-bold text-white/80 hover:text-white">Lihat semua renewal <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="editorial-rule mb-14"></div>
+
+    <!-- Section 3: Team activity -->
+    <section class="mb-14">
+      <div class="grid grid-cols-12 gap-6">
+        <div class="col-span-3">
+          <div class="text-[10px] font-bold text-sapphire-500 tracking-[2.5px] uppercase mb-1">§ 03</div>
+          <h2 class="serif font-bold text-3xl leading-tight">Kumpulan<br>Team Gemilang</h2>
+          <div class="text-inkMuted text-[12px] mt-3">12 ejen di bawah anda · Pencapaian minggu ini.</div>
+          <a class="inline-flex items-center gap-1.5 mt-4 text-[12px] font-bold text-ruby-500 hover:underline">Buka Dashboard Team <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+        </div>
+
+        <div class="col-span-9 grid grid-cols-3 gap-5">
+          <div class="bg-white border border-border rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-3">
+              <div class="text-[10px] font-bold uppercase tracking-[1.5px] text-inkMuted">Top Performer</div>
+              <i data-lucide="trophy" class="w-4 h-4 text-amber-500"></i>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold">FA</div>
+              <div>
+                <div class="serif font-bold text-xl">Farah Nadia</div>
+                <div class="text-[11px] text-inkMuted">RM 12,540 komisyen</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white border border-border rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-3">
+              <div class="text-[10px] font-bold uppercase tracking-[1.5px] text-inkMuted">ANP Kumpulan</div>
+              <i data-lucide="trending-up" class="w-4 h-4 text-emerald-500"></i>
+            </div>
+            <div class="serif font-bold text-4xl">RM 286k</div>
+            <div class="text-[11px] text-emerald-600 font-semibold mt-1">+18% vs April</div>
+          </div>
+
+          <div class="bg-white border border-border rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-3">
+              <div class="text-[10px] font-bold uppercase tracking-[1.5px] text-inkMuted">Tidak Aktif</div>
+              <i data-lucide="alert-circle" class="w-4 h-4 text-ruby-500"></i>
+            </div>
+            <div class="serif font-bold text-4xl text-ruby-600">3</div>
+            <div class="text-[11px] text-inkMuted mt-1">Ejen perlu intervention</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="editorial-rule mb-10"></div>
+
+    <!-- Footer -->
+    <footer class="flex items-center justify-between text-[11px] text-inkMuted">
+      <div>Agentivo.MY · Insurance OS untuk Ejen Malaysia</div>
+      <div class="flex items-center gap-4">
+        <a class="hover:text-ink">Bantuan</a>
+        <a class="hover:text-ink">Apa Baru</a>
+        <span class="mono">v2.1.0</span>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
