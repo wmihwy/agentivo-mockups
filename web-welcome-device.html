@@ -71,20 +71,11 @@ body{font-family:'DM Sans',sans-serif;background:#F8F7F4;color:#1A1A1F;min-heigh
             <div class="glow-orb" style="width:300px;height:300px;background:rgba(255,180,180,0.18);top:-100px;right:-80px;"></div>
             <div class="glow-orb" style="width:250px;height:250px;background:rgba(80,0,10,0.6);bottom:-80px;left:-50px;"></div>
 
-            <!-- Top: logo -->
-            <div class="relative pt-12 px-7">
-              <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center"><span class="font-bold text-white">A</span></div>
-                <div class="font-bold text-white text-[15px]">Agentivo<span class="text-black">.MY</span></div>
-              </div>
-            </div>
-
-            <!-- Mid: big message -->
-            <div class="relative flex-1 px-7 flex flex-col justify-center">
-              <div class="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center mb-6">
-                <i data-lucide="smartphone" class="w-8 h-8 text-white"></i>
-              </div>
-              <h2 class="font-bold text-white text-[34px] leading-[1.05] tracking-tight">Muat turun aplikasi mobile kami</h2>
+            <!-- Mid: logo centered + message -->
+            <div class="relative flex-1 px-7 flex flex-col justify-center items-center text-center">
+              <img src="assets/icon.png" alt="Agentivo.MY" class="w-32 h-32 mb-6" style="filter:drop-shadow(0 8px 32px rgba(0,0,0,0.25));">
+              <div class="font-bold text-white text-[16px] mb-3">Agentivo<span class="text-black">.MY</span></div>
+              <h2 class="font-bold text-white text-[30px] leading-[1.1] tracking-tight">Muat turun aplikasi mobile kami</h2>
               <p class="text-white/75 text-[14px] leading-relaxed mt-4">Untuk pengalaman terbaik di telefon, gunakan aplikasi rasmi Agentivo.MY. Ciri WhatsApp, notifikasi push, dan kamera scan lebih lancar di app.</p>
             </div>
 
@@ -131,50 +122,35 @@ body{font-family:'DM Sans',sans-serif;background:#F8F7F4;color:#1A1A1F;min-heigh
         </div>
         <div class="frame-content" style="height:calc(100% - 30px);">
 
-          <div class="gradient-ruby h-full relative overflow-hidden flex">
+          <div class="gradient-ruby h-full relative overflow-hidden flex flex-col items-center justify-center text-center px-12 py-10">
             <div class="dot-grid absolute inset-0 opacity-30"></div>
-            <div class="glow-orb" style="width:400px;height:400px;background:rgba(255,180,180,0.18);top:-150px;right:-100px;"></div>
+            <div class="glow-orb" style="width:500px;height:500px;background:rgba(255,180,180,0.18);top:-200px;left:50%;transform:translateX(-50%);"></div>
+            <div class="glow-orb" style="width:350px;height:350px;background:rgba(80,0,10,0.55);bottom:-150px;left:50%;transform:translateX(-50%);"></div>
 
-            <!-- Left: copy -->
-            <div class="relative flex-1 p-12 flex flex-col justify-center">
-              <div class="flex items-center gap-2.5 mb-6">
-                <div class="w-10 h-10 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center"><span class="font-bold text-white">A</span></div>
-                <div class="font-bold text-white text-base">Agentivo<span class="text-black">.MY</span></div>
-              </div>
-              <div class="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center mb-5">
-                <i data-lucide="tablet" class="w-7 h-7 text-white"></i>
-              </div>
-              <h2 class="font-bold text-white text-[36px] leading-[1.05] tracking-tight">Muat turun aplikasi untuk akses penuh</h2>
+            <div class="relative flex flex-col items-center max-w-lg">
+              <img src="assets/icon.png" alt="Agentivo.MY" class="w-36 h-36 mb-6" style="filter:drop-shadow(0 12px 40px rgba(0,0,0,0.3));">
+              <div class="font-bold text-white text-[17px] mb-4">Agentivo<span class="text-black">.MY</span></div>
+              <h2 class="font-bold text-white text-[34px] leading-[1.08] tracking-tight">Muat turun aplikasi untuk akses penuh</h2>
               <p class="text-white/75 text-[13px] leading-relaxed mt-4 max-w-md">Aplikasi mobile dioptimumkan untuk tablet juga. Akses lebih pantas, notifikasi push, dan support offline.</p>
 
               <div class="flex gap-3 mt-7">
                 <a class="flex items-center gap-2.5 bg-black rounded-xl px-4 py-3 cursor-pointer">
                   <i data-lucide="apple" class="w-6 h-6 text-white"></i>
-                  <div>
+                  <div class="text-left">
                     <div class="text-white/70 text-[9px] leading-none">Muat turun di</div>
                     <div class="text-white font-bold text-[14px] leading-tight">App Store</div>
                   </div>
                 </a>
                 <a class="flex items-center gap-2.5 bg-black rounded-xl px-4 py-3 cursor-pointer">
                   <i data-lucide="play" class="w-6 h-6 text-white" style="fill:white;"></i>
-                  <div>
+                  <div class="text-left">
                     <div class="text-white/70 text-[9px] leading-none">Dapatkan di</div>
                     <div class="text-white font-bold text-[14px] leading-tight">Google Play</div>
                   </div>
                 </a>
               </div>
-              <a class="text-white/55 text-[12px] underline mt-5 inline-block">Teruskan ke web (terhad)</a>
+              <a class="text-white/55 text-[12px] underline mt-5">Teruskan ke web (terhad)</a>
             </div>
-
-            <!-- Right: device illustration -->
-            <div class="relative w-[280px] flex items-center justify-center pr-12">
-              <div class="relative">
-                <div class="w-44 h-72 bg-black rounded-[28px] p-2 shadow-2xl">
-                  <div class="w-full h-full bg-gradient-to-br from-ruby-700 to-ruby-500 rounded-[20px] flex items-center justify-center text-white text-3xl font-bold">A</div>
-                </div>
-              </div>
-            </div>
-
           </div>
 
         </div>
@@ -202,21 +178,18 @@ body{font-family:'DM Sans',sans-serif;background:#F8F7F4;color:#1A1A1F;min-heigh
           <div class="h-full flex">
 
             <!-- Left: brand panel -->
-            <div class="gradient-dark relative w-[42%] p-10 flex flex-col text-white overflow-hidden">
+            <div class="gradient-dark relative w-[42%] p-10 flex flex-col items-center text-white overflow-hidden">
               <div class="dot-grid absolute inset-0 opacity-50"></div>
-              <div class="glow-orb" style="width:300px;height:300px;background:rgba(200,16,46,0.2);top:-80px;left:-80px;"></div>
+              <div class="glow-orb" style="width:400px;height:400px;background:rgba(200,16,46,0.22);top:-100px;left:50%;transform:translateX(-50%);"></div>
 
-              <div class="relative flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-ruby-700 to-ruby-500 flex items-center justify-center font-bold">A</div>
-                <div class="font-bold text-base">Agentivo<span class="text-white">.MY</span></div>
-              </div>
-
-              <div class="relative flex-1 flex flex-col justify-center">
+              <div class="relative flex-1 flex flex-col justify-center items-center text-center">
+                <img src="assets/icon.png" alt="Agentivo.MY" class="w-28 h-28 mb-6" style="filter:drop-shadow(0 12px 36px rgba(200,16,46,0.4));">
+                <div class="font-bold text-[17px] mb-4">Agentivo<span class="text-white">.MY</span></div>
                 <div class="text-[11px] font-bold text-ruby-300 tracking-[2.5px] uppercase mb-3">Insurance OS · Malaysia</div>
-                <h2 class="font-bold text-[42px] leading-[1.05] tracking-tight">Urus prospek, polisi & komisyen dalam satu platform.</h2>
+                <h2 class="font-bold text-[36px] leading-[1.08] tracking-tight max-w-sm">Urus prospek, polisi & komisyen dalam satu platform.</h2>
                 <p class="text-white/55 text-sm leading-relaxed mt-5 max-w-sm">Untuk ejen Great Eastern, AIA, Prudential dan 8 syarikat insurans lain di Malaysia.</p>
 
-                <div class="grid grid-cols-2 gap-4 mt-10">
+                <div class="grid grid-cols-2 gap-6 mt-10 text-center">
                   <div>
                     <div class="font-bold text-2xl text-white">2,400+</div>
                     <div class="text-white/45 text-[11px] mt-1">Ejen aktif</div>
