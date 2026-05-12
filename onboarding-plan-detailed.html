@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ms" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onboarding — Detailed Plan Picker</title>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: { colors: {
+  ruby:{ 500:'#C8102E',600:'#B22222',700:'#8B1E1E',800:'#5C1414' },
+  sapphire:{ 500:'#0F52BA',600:'#1C3F7A',700:'#152E5C',800:'#0D1E3D' },
+  ink:'#1A1A1F', inkm:'#7A7A8A', border:'#E4E4EC', cream:'#F8F7F4'
+}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0D1117;font-family:'DM Sans',system-ui,sans-serif;padding:40px 20px 60px;color:white;}
+.row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;}
+.phone{width:390px;height:844px;background:#F8F7F4;border-radius:48px;overflow:hidden;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 40px rgba(0,0,0,0.5);display:flex;flex-direction:column;}
+.serif{font-family:'Cormorant Garamond',serif;}
+.pscroll{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;}
+.pscroll::-webkit-scrollbar{display:none;}
+
+.sb{display:flex;justify-content:space-between;align-items:center;padding:12px 28px 4px;flex-shrink:0;font-size:12px;font-weight:700;color:#1A1A1F;}
+
+.step-tag{text-align:center;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-top:10px;}
+.step-tag b{color:white;font-size:13px;display:block;margin-top:3px;}
+.desc{text-align:center;font-size:11px;color:rgba(255,255,255,0.4);max-width:780px;margin:8px auto 0;line-height:1.6;}
+
+/* Progress */
+.aB-progress{display:flex;align-items:center;gap:8px;}
+.aB-progress-bar{flex:1;height:5px;background:#E4E4EC;border-radius:3px;overflow:hidden;}
+.aB-progress-fill{height:100%;background:linear-gradient(90deg,#C8102E,#E03050);border-radius:3px;}
+.aB-progress-text{font-size:11px;font-weight:700;color:#7A7A8A;}
+
+/* OPTION 1: Tab switcher (1 plan visible at a time) */
+.t1-tabs{display:flex;gap:5px;padding:4px;background:#F8F7F4;border-radius:14px;}
+.t1-tab{flex:1;padding:11px;text-align:center;font-size:11px;font-weight:700;color:#7A7A8A;border-radius:10px;}
+.t1-tab.free.act{background:white;color:#1A1A1F;box-shadow:0 2px 4px rgba(0,0,0,0.06);}
+.t1-tab.pro.act{background:linear-gradient(145deg,#8B1E1E,#C8102E);color:white;box-shadow:0 4px 14px rgba(200,16,46,0.35);}
+.t1-tab.team.act{background:linear-gradient(145deg,#152E5C,#0F52BA);color:white;box-shadow:0 4px 14px rgba(15,82,186,0.35);}
+.t1-price-card{background:white;border-radius:20px;padding:20px;border:1px solid #E4E4EC;}
+.t1-price-card.pro{background:linear-gradient(145deg,#6B0F20,#C8102E,#E03050);border-color:transparent;color:white;box-shadow:0 12px 32px rgba(200,16,46,0.35);}
+.t1-price-card.team{background:linear-gradient(145deg,#152E5C,#1C3F7A,#0F52BA);border-color:transparent;color:white;box-shadow:0 12px 32px rgba(15,82,186,0.35);}
+.t1-feature{display:flex;align-items:flex-start;gap:9px;padding:8px 0;}
+.t1-feature-iw{width:18px;height:18px;border-radius:5px;background:#DCFCE7;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.t1-feature.x .t1-feature-iw{background:#F3F4F6;}
+.t1-price-card.pro .t1-feature-iw{background:rgba(255,255,255,0.2);}
+.t1-price-card.team .t1-feature-iw{background:rgba(255,255,255,0.2);}
+
+/* OPTION 2: Comparison table */
+.t2-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid #E4E4EC;background:white;}
+.t2-h-feature{padding:10px 6px;font-size:9px;font-weight:700;color:#7A7A8A;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #E4E4EC;border-right:1px solid #E4E4EC;}
+.t2-h-plan{padding:10px 4px;text-align:center;border-bottom:1px solid #E4E4EC;border-right:1px solid #E4E4EC;}
+.t2-h-plan.last{border-right:0;}
+.t2-h-plan.pro{background:linear-gradient(180deg,#FDF5F5,#F8F7F4);}
+.t2-h-plan.team{background:linear-gradient(180deg,#F0F6FF,#F8F7F4);}
+.t2-h-pname{font-size:11px;font-weight:700;color:#1A1A1F;letter-spacing:-0.2px;}
+.t2-h-price{font-size:10px;color:#7A7A8A;font-weight:600;margin-top:1px;}
+.t2-h-plan.pro .t2-h-pname{color:#C8102E;}
+.t2-h-plan.team .t2-h-pname{color:#0F52BA;}
+.t2-feature{padding:8px 6px;font-size:10px;font-weight:600;color:#1A1A1F;border-bottom:1px solid #E4E4EC;border-right:1px solid #E4E4EC;}
+.t2-cell{padding:8px 4px;text-align:center;border-bottom:1px solid #E4E4EC;border-right:1px solid #E4E4EC;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;}
+.t2-cell.last{border-right:0;}
+.t2-cell.no{color:#9CA3AF;}
+.t2-cell.yes{color:#059669;}
+
+.btn-primary{background:linear-gradient(145deg,#8B1E1E,#C8102E,#E03050);color:white;border:none;border-radius:16px;padding:16px;font-family:inherit;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 20px rgba(200,16,46,0.35);}
+.btn-ghost{background:transparent;color:#7A7A8A;border:none;font-family:inherit;font-size:12px;font-weight:600;padding:8px;text-align:center;}
+.btn-back{padding:0;width:36px;height:36px;border-radius:50%;background:#F8F7F4;display:flex;align-items:center;justify-content:center;border:none;}
+</style>
+</head>
+<body>
+
+<p style="text-align:center;font-size:13px;font-weight:700;letter-spacing:2px;color:white;text-transform:uppercase;">Plan Picker — Detailed Versions</p>
+<p class="desc">2 cara tunjuk features lengkap untuk decision yang betul. Pilih yang anda lebih suka — atau gabungkan idea.</p>
+
+<div style="height:24px;"></div>
+
+<!-- ════════════ OPTION 1: TAB SWITCHER ════════════ -->
+<div class="row">
+
+  <!-- Free tab -->
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div style="flex:1;padding:24px 22px;display:flex;flex-direction:column;background:white;">
+        <div class="aB-progress" style="margin-bottom:18px;">
+          <button class="btn-back"><svg style="width:16px;height:16px;color:#1A1A1F;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <div class="aB-progress-bar"><div class="aB-progress-fill" style="width:100%;"></div></div>
+          <p class="aB-progress-text">4 / 4</p>
+        </div>
+
+        <p style="font-size:11px;color:#C8102E;font-weight:700;text-transform:uppercase;letter-spacing:2px;">PILIH PAKEJ</p>
+        <h2 class="serif" style="font-size:28px;font-weight:700;color:#1A1A1F;letter-spacing:-0.5px;line-height:1.1;margin-top:6px;margin-bottom:18px;">Mula percuma</h2>
+
+        <!-- Tab switcher -->
+        <div class="t1-tabs">
+          <div class="t1-tab free act">Percuma</div>
+          <div class="t1-tab">Pro</div>
+          <div class="t1-tab">Team</div>
+        </div>
+
+        <div style="height:16px;"></div>
+
+        <!-- Free plan card -->
+        <div class="t1-price-card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;">
+            <div>
+              <p style="font-size:17px;font-weight:700;color:#1A1A1F;">Percuma</p>
+              <p style="font-size:11px;color:#7A7A8A;">Untuk pemula</p>
+            </div>
+            <p style="font-size:30px;font-weight:700;color:#1A1A1F;letter-spacing:-1px;line-height:1;">RM 0</p>
+          </div>
+
+          <div style="padding-top:12px;border-top:1px solid #E4E4EC;">
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:#059669;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:#1A1A1F;font-weight:600;">Lead Manager (had 50 prospek)</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:#059669;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:#1A1A1F;font-weight:600;">Renewal Alert asas</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:#059669;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:#1A1A1F;font-weight:600;">Profil Digital + QR</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:#059669;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:#1A1A1F;font-weight:600;">Knowledge Hub asas</p>
+            </div>
+            <div class="t1-feature x">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:#9CA3AF;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+              <p style="font-size:12px;color:#9CA3AF;font-weight:500;">AI Proposal Generator</p>
+            </div>
+            <div class="t1-feature x">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:#9CA3AF;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+              <p style="font-size:12px;color:#9CA3AF;font-weight:500;">WhatsApp Templates</p>
+            </div>
+            <div class="t1-feature x">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:#9CA3AF;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+              <p style="font-size:12px;color:#9CA3AF;font-weight:500;">Content Creator</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1;"></div>
+        <button class="btn-primary">Mula Percuma →</button>
+        <button class="btn-ghost" style="margin-top:6px;">Bandingkan semua pakej</button>
+      </div>
+    </div>
+    <p class="step-tag">Tab Free<b>RM 0 / bulan</b></p>
+  </div>
+
+  <!-- Pro tab -->
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div style="flex:1;padding:24px 22px;display:flex;flex-direction:column;background:white;">
+        <div class="aB-progress" style="margin-bottom:18px;">
+          <button class="btn-back"><svg style="width:16px;height:16px;color:#1A1A1F;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <div class="aB-progress-bar"><div class="aB-progress-fill" style="width:100%;"></div></div>
+          <p class="aB-progress-text">4 / 4</p>
+        </div>
+
+        <p style="font-size:11px;color:#C8102E;font-weight:700;text-transform:uppercase;letter-spacing:2px;">PILIH PAKEJ</p>
+        <h2 class="serif" style="font-size:28px;font-weight:700;color:#1A1A1F;letter-spacing:-0.5px;line-height:1.1;margin-top:6px;margin-bottom:18px;">Naik taraf ke Pro</h2>
+
+        <div class="t1-tabs">
+          <div class="t1-tab">Percuma</div>
+          <div class="t1-tab pro act">⭐ Pro</div>
+          <div class="t1-tab">Team</div>
+        </div>
+
+        <div style="height:16px;"></div>
+
+        <!-- Pro plan card -->
+        <div class="t1-price-card pro" style="position:relative;">
+          <div style="position:absolute;top:14px;right:14px;background:#D4AF37;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:5px;">POPULAR</div>
+          <div style="margin-bottom:14px;">
+            <p style="font-size:17px;font-weight:700;color:white;">Pro</p>
+            <p style="font-size:11px;color:rgba(255,255,255,0.7);">Untuk ejen individu yang serius</p>
+            <p style="font-size:30px;font-weight:700;color:white;letter-spacing:-1px;margin-top:8px;line-height:1;">RM 39<span style="font-size:14px;color:rgba(255,255,255,0.7);font-weight:600;"> / bulan</span></p>
+          </div>
+
+          <div style="padding-top:12px;border-top:1px solid rgba(255,255,255,0.2);">
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Semua dalam Percuma +</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Lead unlimited</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">AI Proposal Generator</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">WhatsApp Template (18 templates)</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Content Creator + AI Caption</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">MDRT Simulator</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Referral Engine + Auto-track</p>
+            </div>
+            <div style="margin-top:10px;background:rgba(212,175,55,0.18);border:1px solid rgba(212,175,55,0.3);border-radius:10px;padding:10px;text-align:center;">
+              <p style="font-size:11px;font-weight:700;color:#FCD34D;">⚡ 14 hari trial percuma</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1;"></div>
+        <button class="btn-primary">Mula Trial Pro →</button>
+      </div>
+    </div>
+    <p class="step-tag">Tab Pro<b>RM 39 / bulan</b></p>
+  </div>
+
+  <!-- Team tab -->
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div style="flex:1;padding:24px 22px;display:flex;flex-direction:column;background:white;">
+        <div class="aB-progress" style="margin-bottom:18px;">
+          <button class="btn-back"><svg style="width:16px;height:16px;color:#1A1A1F;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <div class="aB-progress-bar"><div class="aB-progress-fill" style="width:100%;"></div></div>
+          <p class="aB-progress-text">4 / 4</p>
+        </div>
+
+        <p style="font-size:11px;color:#C8102E;font-weight:700;text-transform:uppercase;letter-spacing:2px;">PILIH PAKEJ</p>
+        <h2 class="serif" style="font-size:28px;font-weight:700;color:#1A1A1F;letter-spacing:-0.5px;line-height:1.1;margin-top:6px;margin-bottom:18px;">Untuk Team Leader</h2>
+
+        <div class="t1-tabs">
+          <div class="t1-tab">Percuma</div>
+          <div class="t1-tab">Pro</div>
+          <div class="t1-tab team act">🛡️ Team</div>
+        </div>
+
+        <div style="height:16px;"></div>
+
+        <!-- Team plan card -->
+        <div class="t1-price-card team">
+          <div style="margin-bottom:14px;">
+            <p style="font-size:17px;font-weight:700;color:white;">Team</p>
+            <p style="font-size:11px;color:rgba(255,255,255,0.7);">Untuk ketua kumpulan</p>
+            <p style="font-size:30px;font-weight:700;color:white;letter-spacing:-1px;margin-top:8px;line-height:1;">RM 199<span style="font-size:14px;color:rgba(255,255,255,0.7);font-weight:600;"> / bulan</span></p>
+          </div>
+
+          <div style="padding-top:12px;border-top:1px solid rgba(255,255,255,0.2);">
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Semua dalam Pro +</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Dashboard Kumpulan</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Leaderboard & Gamification</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Broadcast ke semua ejen</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Onboarding Ejen Baru</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Auto-Generate PDF/Excel Report</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Invite Code System</p>
+            </div>
+            <div class="t1-feature">
+              <div class="t1-feature-iw"><svg style="width:10px;height:10px;color:white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <p style="font-size:12px;color:white;font-weight:600;">Sehingga 20 ejen dalam kumpulan</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1;"></div>
+        <button class="btn-primary" style="background:linear-gradient(145deg,#152E5C,#1C3F7A,#0F52BA);box-shadow:0 8px 20px rgba(15,82,186,0.35);">Naik taraf ke Team →</button>
+      </div>
+    </div>
+    <p class="step-tag">Tab Team<b>RM 199 / bulan</b></p>
+  </div>
+
+</div>
+
+<p style="text-align:center;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-top:14px;">Option 1<br/><b style="color:white;font-size:13px;display:block;margin-top:4px;">Tab Switcher (1 plan visible)</b></p>
+<p class="desc">Tap tab → swap content. Setiap plan tunjuk features lengkap (paid features hijau, locked features grey-out untuk Free). Senang focus 1 plan dalam masa yang sama.</p>
+
+<div style="height:48px;"></div>
+
+<!-- ════════════ OPTION 2: COMPARISON TABLE ════════════ -->
+<div class="row">
+  <div>
+    <div class="phone">
+      <div class="sb"><span>9:41</span><div style="display:flex;gap:4px;"><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-4 11-4 11 4 11 4"/></svg><svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="6" width="16" height="12" rx="2"/></svg></div></div>
+      <div class="pscroll" style="padding:24px 18px 24px;display:flex;flex-direction:column;background:white;">
+        <div class="aB-progress" style="margin-bottom:18px;">
+          <button class="btn-back"><svg style="width:16px;height:16px;color:#1A1A1F;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <div class="aB-progress-bar"><div class="aB-progress-fill" style="width:100%;"></div></div>
+          <p class="aB-progress-text">4 / 4</p>
+        </div>
+
+        <p style="font-size:11px;color:#C8102E;font-weight:700;text-transform:uppercase;letter-spacing:2px;">BANDINGKAN PAKEJ</p>
+        <h2 class="serif" style="font-size:26px;font-weight:700;color:#1A1A1F;letter-spacing:-0.5px;line-height:1.1;margin-top:4px;margin-bottom:16px;">Pilih untuk anda</h2>
+
+        <!-- Comparison table -->
+        <div class="t2-grid">
+          <!-- Header row -->
+          <div class="t2-h-feature">Features</div>
+          <div class="t2-h-plan"><p class="t2-h-pname">Free</p><p class="t2-h-price">RM 0</p></div>
+          <div class="t2-h-plan pro"><p class="t2-h-pname">Pro</p><p class="t2-h-price">RM 39</p></div>
+          <div class="t2-h-plan team last"><p class="t2-h-pname">Team</p><p class="t2-h-price">RM 199</p></div>
+
+          <!-- Features rows -->
+          <div class="t2-feature">Lead Manager</div>
+          <div class="t2-cell"><span style="font-weight:600;color:#7A7A8A;">50</span></div>
+          <div class="t2-cell yes">∞</div>
+          <div class="t2-cell yes last">∞</div>
+
+          <div class="t2-feature">Renewal Alert</div>
+          <div class="t2-cell yes">✓</div>
+          <div class="t2-cell yes">✓</div>
+          <div class="t2-cell yes last">✓</div>
+
+          <div class="t2-feature">Profil Digital + QR</div>
+          <div class="t2-cell yes">✓</div>
+          <div class="t2-cell yes">✓</div>
+          <div class="t2-cell yes last">✓</div>
+
+          <div class="t2-feature">AI Proposal</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell yes">30/bln</div>
+          <div class="t2-cell yes last">100/bln</div>
+
+          <div class="t2-feature">WhatsApp Templates</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell yes">✓</div>
+          <div class="t2-cell yes last">✓</div>
+
+          <div class="t2-feature">Content Creator</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell yes">✓</div>
+          <div class="t2-cell yes last">✓</div>
+
+          <div class="t2-feature">MDRT Simulator</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell yes">✓</div>
+          <div class="t2-cell yes last">✓</div>
+
+          <div class="t2-feature">Referral Engine</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell yes">✓</div>
+          <div class="t2-cell yes last">✓</div>
+
+          <div class="t2-feature">Dashboard Kumpulan</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell yes last">✓</div>
+
+          <div class="t2-feature">Leaderboard</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell yes last">✓</div>
+
+          <div class="t2-feature">Broadcast</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell yes last">✓</div>
+
+          <div class="t2-feature">PDF Reports</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell no">—</div>
+          <div class="t2-cell yes last">✓</div>
+
+          <div class="t2-feature" style="border-bottom:0;">Ejen dalam kumpulan</div>
+          <div class="t2-cell" style="border-bottom:0;color:#9CA3AF;">—</div>
+          <div class="t2-cell" style="border-bottom:0;color:#9CA3AF;">—</div>
+          <div class="t2-cell yes last" style="border-bottom:0;">20</div>
+        </div>
+
+        <!-- 3 select buttons -->
+        <div style="margin-top:18px;display:flex;flex-direction:column;gap:8px;">
+          <button style="background:white;border:1.5px solid #E4E4EC;border-radius:14px;padding:13px;font-family:inherit;font-size:13px;font-weight:700;color:#1A1A1F;display:flex;justify-content:space-between;align-items:center;">
+            <span>Mula Percuma</span><span style="font-size:12px;color:#7A7A8A;">RM 0 / bulan</span>
+          </button>
+          <button style="background:linear-gradient(145deg,#8B1E1E,#C8102E);color:white;border:none;border-radius:14px;padding:13px;font-family:inherit;font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center;box-shadow:0 6px 16px rgba(200,16,46,0.3);">
+            <span>⭐ Trial Pro 14 hari</span><span style="font-size:12px;color:rgba(255,255,255,0.85);">RM 39 / bulan</span>
+          </button>
+          <button style="background:white;border:1.5px solid #E4E4EC;border-radius:14px;padding:13px;font-family:inherit;font-size:13px;font-weight:700;color:#1A1A1F;display:flex;justify-content:space-between;align-items:center;">
+            <span>🛡️ Pakej Team</span><span style="font-size:12px;color:#7A7A8A;">RM 199 / bulan</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p class="step-tag">Option 2<b>Comparison Table</b></p>
+  </div>
+</div>
+
+<p style="text-align:center;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-top:14px;">Option 2<br/><b style="color:white;font-size:13px;display:block;margin-top:4px;">Comparison Table</b></p>
+<p class="desc">Table comparison 3 column — lihat ALL features perbezaan dalam 1 view. Ada count specifik (50, ∞, 30/bln) untuk feature yang ada limit. 3 button select di bawah.</p>
+
+</body>
+</html>
